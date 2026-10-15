@@ -1,0 +1,29 @@
+[
+  {
+    "_id": {
+      "$oid": "6ac5ceb3e59ed5c068f5b3dd"
+    },
+    "user": {
+      "$oid": "6ac5ce1cfe17aad7958d18d0"
+    },
+    "restaurant": null,
+    "items": [],
+    "discount": {
+      "$numberInt": "0"
+    },
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1791348403134"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1791348476942"
+      }
+    },
+    "__v": {
+      "$numberInt": "1"
+    },
+    "coupon": null
+  }
+]

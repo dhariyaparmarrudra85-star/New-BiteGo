@@ -1,0 +1,1388 @@
+[
+  {
+    "_id": {
+      "$oid": "6ac5ced3e59ed5c068f5b3ea"
+    },
+    "user": {
+      "$oid": "6ac5ce1cfe17aad7958d18d0"
+    },
+    "restaurant": {
+      "$oid": "6ac5ce1cfe17aad7958d18d8"
+    },
+    "items": [
+      {
+        "food": {
+          "$oid": "6ac5ce1cfe17aad7958d18f1"
+        },
+        "name": "Margherita Pizza",
+        "image": "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400",
+        "price": {
+          "$numberInt": "320"
+        },
+        "quantity": {
+          "$numberInt": "1"
+        },
+        "isVeg": true,
+        "_id": {
+          "$oid": "6ac5ced3e59ed5c068f5b3eb"
+        }
+      }
+    ],
+    "deliveryAddress": {
+      "fullName": "Rudresh Dhariyaparmar",
+      "phone": "9111111111",
+      "addressLine": "381",
+      "city": "halvad",
+      "state": "Gujarat",
+      "pincode": "363330"
+    },
+    "paymentMethod": "cod",
+    "paymentStatus": "pending",
+    "orderStatus": "pending",
+    "subtotal": {
+      "$numberInt": "320"
+    },
+    "deliveryFee": {
+      "$numberInt": "25"
+    },
+    "tax": {
+      "$numberInt": "16"
+    },
+    "discount": {
+      "$numberInt": "0"
+    },
+    "totalAmount": {
+      "$numberInt": "361"
+    },
+    "statusTimeline": [
+      {
+        "status": "pending",
+        "message": "Order placed successfully!",
+        "_id": {
+          "$oid": "6ac5ced3e59ed5c068f5b3ec"
+        },
+        "time": {
+          "$date": {
+            "$numberLong": "1791348435870"
+          }
+        }
+      }
+    ],
+    "estimatedDeliveryTime": {
+      "$numberInt": "30"
+    },
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1791348435872"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1791348435872"
+      }
+    },
+    "__v": {
+      "$numberInt": "0"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ac5cefce59ed5c068f5b44a"
+    },
+    "user": {
+      "$oid": "6ac5ce1cfe17aad7958d18d0"
+    },
+    "restaurant": {
+      "$oid": "6ac5ce1cfe17aad7958d18d6"
+    },
+    "items": [
+      {
+        "food": {
+          "$oid": "6ac5ce1cfe17aad7958d18eb"
+        },
+        "name": "Dal Makhani",
+        "image": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=400",
+        "price": {
+          "$numberInt": "220"
+        },
+        "quantity": {
+          "$numberInt": "1"
+        },
+        "isVeg": true,
+        "_id": {
+          "$oid": "6ac5cefce59ed5c068f5b44b"
+        }
+      }
+    ],
+    "deliveryAddress": {
+      "fullName": "Rudresh Dhariyaparmar",
+      "phone": "9111111111",
+      "addressLine": "381",
+      "city": "Ahmedabad",
+      "state": "Gujarat",
+      "pincode": "380013"
+    },
+    "paymentMethod": "cod",
+    "paymentStatus": "pending",
+    "orderStatus": "pending",
+    "subtotal": {
+      "$numberInt": "220"
+    },
+    "deliveryFee": {
+      "$numberInt": "30"
+    },
+    "tax": {
+      "$numberInt": "11"
+    },
+    "discount": {
+      "$numberInt": "0"
+    },
+    "totalAmount": {
+      "$numberInt": "261"
+    },
+    "statusTimeline": [
+      {
+        "status": "pending",
+        "message": "Order placed successfully!",
+        "_id": {
+          "$oid": "6ac5cefce59ed5c068f5b44c"
+        },
+        "time": {
+          "$date": {
+            "$numberLong": "1791348476901"
+          }
+        }
+      }
+    ],
+    "estimatedDeliveryTime": {
+      "$numberInt": "35"
+    },
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1791348476902"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1791348476902"
+      }
+    },
+    "__v": {
+      "$numberInt": "0"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ac68ea2515824ccaf59cab5"
+    },
+    "orderNumber": "BG-44177",
+    "customer": {
+      "$oid": "6ac684555c73ff04c97747e8"
+    },
+    "restaurant": {
+      "$oid": "6ac68dc40788f5cea61bb431"
+    },
+    "items": [
+      {
+        "menuItem": {
+          "$oid": "6ac68dc40788f5cea61bb437"
+        },
+        "name": "Truffle Mushroom Pizza",
+        "price": {
+          "$numberInt": "540"
+        },
+        "quantity": {
+          "$numberInt": "1"
+        },
+        "image": "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=600&q=80",
+        "isVeg": true,
+        "customizations": [
+          {
+            "group": "Size",
+            "name": "Regular (8 inch)",
+            "price": {
+              "$numberInt": "0"
+            },
+            "_id": {
+              "$oid": "6ac68ea2515824ccaf59cab7"
+            }
+          },
+          {
+            "group": "Extra Toppings & Add-ons",
+            "name": "Extra Fresh Mozzarella",
+            "price": {
+              "$numberInt": "60"
+            },
+            "_id": {
+              "$oid": "6ac68ea2515824ccaf59cab8"
+            }
+          }
+        ],
+        "itemTotal": {
+          "$numberInt": "540"
+        },
+        "_id": {
+          "$oid": "6ac68ea2515824ccaf59cab6"
+        }
+      }
+    ],
+    "deliveryAddress": {
+      "fullName": "Ananya Sharma",
+      "phone": "+91 98765 43210",
+      "houseFlat": "Flat 402, Tower B, Galaxy Heights",
+      "area": "Sindhu Bhavan Road, Bodakdev",
+      "landmark": "Near Bodakdev Urban Lake Park",
+      "city": "Ahmedabad",
+      "state": "Gujarat",
+      "pincode": "380054"
+    },
+    "deliveryInstructions": "Leave at security desk",
+    "subtotal": {
+      "$numberInt": "540"
+    },
+    "discount": {
+      "$numberInt": "100"
+    },
+    "deliveryFee": {
+      "$numberInt": "0"
+    },
+    "tax": {
+      "$numberInt": "27"
+    },
+    "platformFee": {
+      "$numberInt": "0"
+    },
+    "tipAmount": {
+      "$numberInt": "30"
+    },
+    "totalAmount": {
+      "$numberInt": "497"
+    },
+    "coupon": {
+      "code": "BITEGO50",
+      "discountAmount": {
+        "$numberInt": "100"
+      }
+    },
+    "paymentMethod": "UPI",
+    "paymentStatus": "paid",
+    "orderStatus": "DELIVERED",
+    "orderOtp": "3305",
+    "deliveryPartner": {
+      "$oid": "6ac684555c73ff04c97747e4"
+    },
+    "statusTimeline": [
+      {
+        "status": "PLACED",
+        "timestamp": {
+          "$date": {
+            "$numberLong": "1791397538435"
+          }
+        },
+        "note": "Order received and forwarded to kitchen",
+        "_id": {
+          "$oid": "6ac68ea2515824ccaf59cab9"
+        }
+      },
+      {
+        "status": "CONFIRMED",
+        "timestamp": {
+          "$date": {
+            "$numberLong": "1791397539435"
+          }
+        },
+        "note": "Verified via UPI (Ref: 89219845)",
+        "_id": {
+          "$oid": "6ac68ea2515824ccaf59caba"
+        }
+      },
+      {
+        "status": "PREPARING",
+        "timestamp": {
+          "$date": {
+            "$numberLong": "1791397538929"
+          }
+        },
+        "note": "Chef baking in wood-fired oven",
+        "_id": {
+          "$oid": "6ac68ea2515824ccaf59cac5"
+        }
+      },
+      {
+        "status": "PICKED_UP",
+        "timestamp": {
+          "$date": {
+            "$numberLong": "1791397539237"
+          }
+        },
+        "note": "Courier Rajesh Vaghela accepted and picked up parcel from restaurant",
+        "_id": {
+          "$oid": "6ac68ea3515824ccaf59cacc"
+        }
+      },
+      {
+        "status": "DELIVERED",
+        "timestamp": {
+          "$date": {
+            "$numberLong": "1791397539416"
+          }
+        },
+        "note": "Customer confirmed delivery with 4-digit OTP",
+        "_id": {
+          "$oid": "6ac68ea3515824ccaf59cad4"
+        }
+      }
+    ],
+    "estimatedDeliveryTime": "22–26 mins",
+    "customerNote": "",
+    "cancellationReason": null,
+    "review": {
+      "rating": {
+        "$numberInt": "5"
+      },
+      "reviewText": "Incredible woodfired aroma and crisp crust! Truffle oil was spot on.",
+      "courierRating": {
+        "$numberInt": "5"
+      },
+      "createdAt": {
+        "$date": {
+          "$numberLong": "1791397539606"
+        }
+      }
+    },
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1791397538438"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1791397539606"
+      }
+    },
+    "__v": {
+      "$numberInt": "3"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ac694c2a5a405eb48d613a1"
+    },
+    "orderNumber": "BG-15774",
+    "customer": {
+      "$oid": "6ac694c0a5a405eb48d61373"
+    },
+    "restaurant": {
+      "$oid": "6ac68dc40788f5cea61bb431"
+    },
+    "items": [
+      {
+        "menuItem": {
+          "$oid": "6ac68dc40788f5cea61bb437"
+        },
+        "name": "Truffle Mushroom Pizza",
+        "price": {
+          "$numberInt": "480"
+        },
+        "quantity": {
+          "$numberInt": "1"
+        },
+        "image": "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=600&q=80",
+        "isVeg": true,
+        "customizations": [],
+        "itemTotal": {
+          "$numberInt": "480"
+        },
+        "_id": {
+          "$oid": "6ac694c2a5a405eb48d613a2"
+        }
+      }
+    ],
+    "deliveryAddress": {
+      "fullName": "Rohan Varma",
+      "phone": "9898012345",
+      "houseFlat": "504 Stellar Heights",
+      "area": "Sindhu Bhavan Road, Bodakdev",
+      "landmark": "Near Taj Skyline",
+      "city": "Ahmedabad",
+      "state": "Gujarat",
+      "pincode": "380054"
+    },
+    "deliveryInstructions": "Ring bell and leave with security desk",
+    "subtotal": {
+      "$numberInt": "480"
+    },
+    "discount": {
+      "$numberInt": "100"
+    },
+    "deliveryFee": {
+      "$numberInt": "0"
+    },
+    "tax": {
+      "$numberInt": "24"
+    },
+    "platformFee": {
+      "$numberInt": "0"
+    },
+    "tipAmount": {
+      "$numberInt": "0"
+    },
+    "totalAmount": {
+      "$numberInt": "404"
+    },
+    "coupon": {
+      "code": "BITEGO50",
+      "discountAmount": {
+        "$numberInt": "100"
+      }
+    },
+    "paymentMethod": "UPI",
+    "paymentStatus": "paid",
+    "orderStatus": "PLACED",
+    "orderOtp": "5315",
+    "deliveryPartner": null,
+    "statusTimeline": [
+      {
+        "status": "PLACED",
+        "timestamp": {
+          "$date": {
+            "$numberLong": "1791399106662"
+          }
+        },
+        "note": "Order received and forwarded to kitchen",
+        "_id": {
+          "$oid": "6ac694c2a5a405eb48d613a3"
+        }
+      },
+      {
+        "status": "CONFIRMED",
+        "timestamp": {
+          "$date": {
+            "$numberLong": "1791399107662"
+          }
+        },
+        "note": "Verified via upi (Ref: 37282734)",
+        "_id": {
+          "$oid": "6ac694c2a5a405eb48d613a4"
+        }
+      }
+    ],
+    "estimatedDeliveryTime": "22–26 mins",
+    "customerNote": "",
+    "cancellationReason": null,
+    "review": {
+      "reviewText": ""
+    },
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1791399106664"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1791399106664"
+      }
+    },
+    "__v": {
+      "$numberInt": "0"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ac694ef61c2beeb487a4c43"
+    },
+    "orderNumber": "BG-47278",
+    "customer": {
+      "$oid": "6ac694ed61c2beeb487a4c15"
+    },
+    "restaurant": {
+      "$oid": "6ac68dc40788f5cea61bb431"
+    },
+    "items": [
+      {
+        "menuItem": {
+          "$oid": "6ac68dc40788f5cea61bb437"
+        },
+        "name": "Truffle Mushroom Pizza",
+        "price": {
+          "$numberInt": "480"
+        },
+        "quantity": {
+          "$numberInt": "1"
+        },
+        "image": "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=600&q=80",
+        "isVeg": true,
+        "customizations": [],
+        "itemTotal": {
+          "$numberInt": "480"
+        },
+        "_id": {
+          "$oid": "6ac694ef61c2beeb487a4c44"
+        }
+      }
+    ],
+    "deliveryAddress": {
+      "fullName": "Rohan Varma",
+      "phone": "9898012345",
+      "houseFlat": "504 Stellar Heights",
+      "area": "Sindhu Bhavan Road, Bodakdev",
+      "landmark": "Near Taj Skyline",
+      "city": "Ahmedabad",
+      "state": "Gujarat",
+      "pincode": "380054"
+    },
+    "deliveryInstructions": "Ring bell and leave with security desk",
+    "subtotal": {
+      "$numberInt": "480"
+    },
+    "discount": {
+      "$numberInt": "100"
+    },
+    "deliveryFee": {
+      "$numberInt": "0"
+    },
+    "tax": {
+      "$numberInt": "24"
+    },
+    "platformFee": {
+      "$numberInt": "0"
+    },
+    "tipAmount": {
+      "$numberInt": "0"
+    },
+    "totalAmount": {
+      "$numberInt": "404"
+    },
+    "coupon": {
+      "code": "BITEGO50",
+      "discountAmount": {
+        "$numberInt": "100"
+      }
+    },
+    "paymentMethod": "UPI",
+    "paymentStatus": "paid",
+    "orderStatus": "PLACED",
+    "orderOtp": "2764",
+    "deliveryPartner": null,
+    "statusTimeline": [
+      {
+        "status": "PLACED",
+        "timestamp": {
+          "$date": {
+            "$numberLong": "1791399151155"
+          }
+        },
+        "note": "Order received and forwarded to kitchen",
+        "_id": {
+          "$oid": "6ac694ef61c2beeb487a4c45"
+        }
+      },
+      {
+        "status": "CONFIRMED",
+        "timestamp": {
+          "$date": {
+            "$numberLong": "1791399152155"
+          }
+        },
+        "note": "Verified via upi (Ref: 68259199)",
+        "_id": {
+          "$oid": "6ac694ef61c2beeb487a4c46"
+        }
+      }
+    ],
+    "estimatedDeliveryTime": "22–26 mins",
+    "customerNote": "",
+    "cancellationReason": null,
+    "review": {
+      "reviewText": ""
+    },
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1791399151158"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1791399151158"
+      }
+    },
+    "__v": {
+      "$numberInt": "0"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ac6952b61c2beeb487a4c7b"
+    },
+    "orderNumber": "BG-39916",
+    "customer": {
+      "$oid": "6ac6952961c2beeb487a4c4d"
+    },
+    "restaurant": {
+      "$oid": "6ac68dc40788f5cea61bb431"
+    },
+    "items": [
+      {
+        "menuItem": {
+          "$oid": "6ac68dc40788f5cea61bb437"
+        },
+        "name": "Truffle Mushroom Pizza",
+        "price": {
+          "$numberInt": "480"
+        },
+        "quantity": {
+          "$numberInt": "1"
+        },
+        "image": "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=600&q=80",
+        "isVeg": true,
+        "customizations": [],
+        "itemTotal": {
+          "$numberInt": "480"
+        },
+        "_id": {
+          "$oid": "6ac6952b61c2beeb487a4c7c"
+        }
+      }
+    ],
+    "deliveryAddress": {
+      "fullName": "Rohan Varma",
+      "phone": "9898012345",
+      "houseFlat": "504 Stellar Heights",
+      "area": "Sindhu Bhavan Road, Bodakdev",
+      "landmark": "Near Taj Skyline",
+      "city": "Ahmedabad",
+      "state": "Gujarat",
+      "pincode": "380054"
+    },
+    "deliveryInstructions": "Ring bell and leave with security desk",
+    "subtotal": {
+      "$numberInt": "480"
+    },
+    "discount": {
+      "$numberInt": "100"
+    },
+    "deliveryFee": {
+      "$numberInt": "0"
+    },
+    "tax": {
+      "$numberInt": "24"
+    },
+    "platformFee": {
+      "$numberInt": "0"
+    },
+    "tipAmount": {
+      "$numberInt": "0"
+    },
+    "totalAmount": {
+      "$numberInt": "404"
+    },
+    "coupon": {
+      "code": "BITEGO50",
+      "discountAmount": {
+        "$numberInt": "100"
+      }
+    },
+    "paymentMethod": "UPI",
+    "paymentStatus": "paid",
+    "orderStatus": "PLACED",
+    "orderOtp": "6148",
+    "deliveryPartner": null,
+    "statusTimeline": [
+      {
+        "status": "PLACED",
+        "timestamp": {
+          "$date": {
+            "$numberLong": "1791399211002"
+          }
+        },
+        "note": "Order received and forwarded to kitchen",
+        "_id": {
+          "$oid": "6ac6952b61c2beeb487a4c7d"
+        }
+      },
+      {
+        "status": "CONFIRMED",
+        "timestamp": {
+          "$date": {
+            "$numberLong": "1791399212002"
+          }
+        },
+        "note": "Verified via upi (Ref: 11692986)",
+        "_id": {
+          "$oid": "6ac6952b61c2beeb487a4c7e"
+        }
+      }
+    ],
+    "estimatedDeliveryTime": "22–26 mins",
+    "customerNote": "",
+    "cancellationReason": null,
+    "review": {
+      "reviewText": ""
+    },
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1791399211003"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1791399211003"
+      }
+    },
+    "__v": {
+      "$numberInt": "0"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ac6963961c2beeb487a4cb3"
+    },
+    "orderNumber": "BG-51705",
+    "customer": {
+      "$oid": "6ac6963661c2beeb487a4c85"
+    },
+    "restaurant": {
+      "$oid": "6ac68dc40788f5cea61bb431"
+    },
+    "items": [
+      {
+        "menuItem": {
+          "$oid": "6ac68dc40788f5cea61bb437"
+        },
+        "name": "Truffle Mushroom Pizza",
+        "price": {
+          "$numberInt": "480"
+        },
+        "quantity": {
+          "$numberInt": "1"
+        },
+        "image": "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=600&q=80",
+        "isVeg": true,
+        "customizations": [],
+        "itemTotal": {
+          "$numberInt": "480"
+        },
+        "_id": {
+          "$oid": "6ac6963961c2beeb487a4cb4"
+        }
+      }
+    ],
+    "deliveryAddress": {
+      "fullName": "Rohan Varma",
+      "phone": "9898012345",
+      "houseFlat": "504 Stellar Heights",
+      "area": "Sindhu Bhavan Road, Bodakdev",
+      "landmark": "Near Taj Skyline",
+      "city": "Ahmedabad",
+      "state": "Gujarat",
+      "pincode": "380054"
+    },
+    "deliveryInstructions": "Ring bell and leave with security desk",
+    "subtotal": {
+      "$numberInt": "480"
+    },
+    "discount": {
+      "$numberInt": "100"
+    },
+    "deliveryFee": {
+      "$numberInt": "0"
+    },
+    "tax": {
+      "$numberInt": "24"
+    },
+    "platformFee": {
+      "$numberInt": "0"
+    },
+    "tipAmount": {
+      "$numberInt": "0"
+    },
+    "totalAmount": {
+      "$numberInt": "404"
+    },
+    "coupon": {
+      "code": "BITEGO50",
+      "discountAmount": {
+        "$numberInt": "100"
+      }
+    },
+    "paymentMethod": "UPI",
+    "paymentStatus": "paid",
+    "orderStatus": "DELIVERED",
+    "orderOtp": "2285",
+    "deliveryPartner": {
+      "$oid": "6ac684555c73ff04c97747e4"
+    },
+    "statusTimeline": [
+      {
+        "status": "PLACED",
+        "timestamp": {
+          "$date": {
+            "$numberLong": "1791399481015"
+          }
+        },
+        "note": "Order received and forwarded to kitchen",
+        "_id": {
+          "$oid": "6ac6963961c2beeb487a4cb5"
+        }
+      },
+      {
+        "status": "CONFIRMED",
+        "timestamp": {
+          "$date": {
+            "$numberLong": "1791399482015"
+          }
+        },
+        "note": "Verified via upi (Ref: 65309701)",
+        "_id": {
+          "$oid": "6ac6963961c2beeb487a4cb6"
+        }
+      },
+      {
+        "status": "CONFIRMED",
+        "timestamp": {
+          "$date": {
+            "$numberLong": "1791399481735"
+          }
+        },
+        "note": "Kitchen accepted ticket",
+        "_id": {
+          "$oid": "6ac6963961c2beeb487a4cc0"
+        }
+      },
+      {
+        "status": "PREPARING",
+        "timestamp": {
+          "$date": {
+            "$numberLong": "1791399481987"
+          }
+        },
+        "note": "Chef is baking pizza",
+        "_id": {
+          "$oid": "6ac6963961c2beeb487a4cc5"
+        }
+      },
+      {
+        "status": "READY_FOR_PICKUP",
+        "timestamp": {
+          "$date": {
+            "$numberLong": "1791399482226"
+          }
+        },
+        "note": "Packed hot in thermal bag",
+        "_id": {
+          "$oid": "6ac6963a61c2beeb487a4ccb"
+        }
+      },
+      {
+        "status": "PICKED_UP",
+        "timestamp": {
+          "$date": {
+            "$numberLong": "1791399482445"
+          }
+        },
+        "note": "Courier Rajesh Vaghela accepted and picked up parcel from restaurant",
+        "_id": {
+          "$oid": "6ac6963a61c2beeb487a4cd2"
+        }
+      },
+      {
+        "status": "PICKED_UP",
+        "timestamp": {
+          "$date": {
+            "$numberLong": "1791399482670"
+          }
+        },
+        "note": "Order updated to PICKED_UP",
+        "_id": {
+          "$oid": "6ac6963a61c2beeb487a4cda"
+        }
+      },
+      {
+        "status": "OUT_FOR_DELIVERY",
+        "timestamp": {
+          "$date": {
+            "$numberLong": "1791399482884"
+          }
+        },
+        "note": "Order updated to OUT_FOR_DELIVERY",
+        "_id": {
+          "$oid": "6ac6963a61c2beeb487a4ce3"
+        }
+      },
+      {
+        "status": "DELIVERED",
+        "timestamp": {
+          "$date": {
+            "$numberLong": "1791399483114"
+          }
+        },
+        "note": "Customer confirmed delivery with 4-digit OTP",
+        "_id": {
+          "$oid": "6ac6963b61c2beeb487a4ced"
+        }
+      }
+    ],
+    "estimatedDeliveryTime": "22–26 mins",
+    "customerNote": "",
+    "cancellationReason": null,
+    "review": {
+      "reviewText": ""
+    },
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1791399481016"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1791399483115"
+      }
+    },
+    "__v": {
+      "$numberInt": "7"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ac69688674eb9e8a57b06a3"
+    },
+    "orderNumber": "BG-84484",
+    "customer": {
+      "$oid": "6ac69687674eb9e8a57b0675"
+    },
+    "restaurant": {
+      "$oid": "6ac68dc40788f5cea61bb431"
+    },
+    "items": [
+      {
+        "menuItem": {
+          "$oid": "6ac68dc40788f5cea61bb437"
+        },
+        "name": "Truffle Mushroom Pizza",
+        "price": {
+          "$numberInt": "480"
+        },
+        "quantity": {
+          "$numberInt": "1"
+        },
+        "image": "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=600&q=80",
+        "isVeg": true,
+        "customizations": [],
+        "itemTotal": {
+          "$numberInt": "480"
+        },
+        "_id": {
+          "$oid": "6ac69688674eb9e8a57b06a4"
+        }
+      }
+    ],
+    "deliveryAddress": {
+      "fullName": "Rohan Varma",
+      "phone": "9898012345",
+      "houseFlat": "504 Stellar Heights",
+      "area": "Sindhu Bhavan Road, Bodakdev",
+      "landmark": "Near Taj Skyline",
+      "city": "Ahmedabad",
+      "state": "Gujarat",
+      "pincode": "380054"
+    },
+    "deliveryInstructions": "Ring bell and leave with security desk",
+    "subtotal": {
+      "$numberInt": "480"
+    },
+    "discount": {
+      "$numberInt": "100"
+    },
+    "deliveryFee": {
+      "$numberInt": "0"
+    },
+    "tax": {
+      "$numberInt": "24"
+    },
+    "platformFee": {
+      "$numberInt": "0"
+    },
+    "tipAmount": {
+      "$numberInt": "0"
+    },
+    "totalAmount": {
+      "$numberInt": "404"
+    },
+    "coupon": {
+      "code": "BITEGO50",
+      "discountAmount": {
+        "$numberInt": "100"
+      }
+    },
+    "paymentMethod": "UPI",
+    "paymentStatus": "paid",
+    "orderStatus": "DELIVERED",
+    "orderOtp": "1660",
+    "deliveryPartner": {
+      "$oid": "6ac684555c73ff04c97747e4"
+    },
+    "statusTimeline": [
+      {
+        "status": "PLACED",
+        "timestamp": {
+          "$date": {
+            "$numberLong": "1791399560594"
+          }
+        },
+        "note": "Order received and forwarded to kitchen",
+        "_id": {
+          "$oid": "6ac69688674eb9e8a57b06a5"
+        }
+      },
+      {
+        "status": "CONFIRMED",
+        "timestamp": {
+          "$date": {
+            "$numberLong": "1791399561594"
+          }
+        },
+        "note": "Verified via upi (Ref: 11897832)",
+        "_id": {
+          "$oid": "6ac69688674eb9e8a57b06a6"
+        }
+      },
+      {
+        "status": "CONFIRMED",
+        "timestamp": {
+          "$date": {
+            "$numberLong": "1791399561201"
+          }
+        },
+        "note": "Kitchen accepted ticket",
+        "_id": {
+          "$oid": "6ac69689674eb9e8a57b06b0"
+        }
+      },
+      {
+        "status": "PREPARING",
+        "timestamp": {
+          "$date": {
+            "$numberLong": "1791399561410"
+          }
+        },
+        "note": "Chef is baking pizza",
+        "_id": {
+          "$oid": "6ac69689674eb9e8a57b06b5"
+        }
+      },
+      {
+        "status": "READY_FOR_PICKUP",
+        "timestamp": {
+          "$date": {
+            "$numberLong": "1791399561626"
+          }
+        },
+        "note": "Packed hot in thermal bag",
+        "_id": {
+          "$oid": "6ac69689674eb9e8a57b06bb"
+        }
+      },
+      {
+        "status": "PICKED_UP",
+        "timestamp": {
+          "$date": {
+            "$numberLong": "1791399561830"
+          }
+        },
+        "note": "Courier Rajesh Vaghela accepted and picked up parcel from restaurant",
+        "_id": {
+          "$oid": "6ac69689674eb9e8a57b06c2"
+        }
+      },
+      {
+        "status": "PICKED_UP",
+        "timestamp": {
+          "$date": {
+            "$numberLong": "1791399562052"
+          }
+        },
+        "note": "Order updated to PICKED_UP",
+        "_id": {
+          "$oid": "6ac6968a674eb9e8a57b06ca"
+        }
+      },
+      {
+        "status": "OUT_FOR_DELIVERY",
+        "timestamp": {
+          "$date": {
+            "$numberLong": "1791399562260"
+          }
+        },
+        "note": "Order updated to OUT_FOR_DELIVERY",
+        "_id": {
+          "$oid": "6ac6968a674eb9e8a57b06d3"
+        }
+      },
+      {
+        "status": "DELIVERED",
+        "timestamp": {
+          "$date": {
+            "$numberLong": "1791399562476"
+          }
+        },
+        "note": "Customer confirmed delivery with 4-digit OTP",
+        "_id": {
+          "$oid": "6ac6968a674eb9e8a57b06dd"
+        }
+      }
+    ],
+    "estimatedDeliveryTime": "22–26 mins",
+    "customerNote": "",
+    "cancellationReason": null,
+    "review": {
+      "rating": {
+        "$numberInt": "5"
+      },
+      "reviewText": "Incredible woodfired truffle pizza! Rajesh delivered it piping hot in 20 minutes.",
+      "courierRating": {
+        "$numberInt": "5"
+      },
+      "createdAt": {
+        "$date": {
+          "$numberLong": "1791399562704"
+        }
+      }
+    },
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1791399560596"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1791399562705"
+      }
+    },
+    "__v": {
+      "$numberInt": "7"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ac697fdcf914b55610c1216"
+    },
+    "orderNumber": "BG-37549",
+    "customer": {
+      "$oid": "6ac697fbcf914b55610c11e8"
+    },
+    "restaurant": {
+      "$oid": "6ac68dc40788f5cea61bb431"
+    },
+    "items": [
+      {
+        "menuItem": {
+          "$oid": "6ac68dc40788f5cea61bb437"
+        },
+        "name": "Truffle Mushroom Pizza",
+        "price": {
+          "$numberInt": "480"
+        },
+        "quantity": {
+          "$numberInt": "1"
+        },
+        "image": "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=600&q=80",
+        "isVeg": true,
+        "customizations": [],
+        "itemTotal": {
+          "$numberInt": "480"
+        },
+        "_id": {
+          "$oid": "6ac697fdcf914b55610c1217"
+        }
+      }
+    ],
+    "deliveryAddress": {
+      "fullName": "Rohan Varma",
+      "phone": "9898012345",
+      "houseFlat": "504 Stellar Heights",
+      "area": "Sindhu Bhavan Road, Bodakdev",
+      "landmark": "Near Taj Skyline",
+      "city": "Ahmedabad",
+      "state": "Gujarat",
+      "pincode": "380054"
+    },
+    "deliveryInstructions": "Ring bell and leave with security desk",
+    "subtotal": {
+      "$numberInt": "480"
+    },
+    "discount": {
+      "$numberInt": "100"
+    },
+    "deliveryFee": {
+      "$numberInt": "0"
+    },
+    "tax": {
+      "$numberInt": "24"
+    },
+    "platformFee": {
+      "$numberInt": "0"
+    },
+    "tipAmount": {
+      "$numberInt": "0"
+    },
+    "totalAmount": {
+      "$numberInt": "404"
+    },
+    "coupon": {
+      "code": "BITEGO50",
+      "discountAmount": {
+        "$numberInt": "100"
+      }
+    },
+    "paymentMethod": "UPI",
+    "paymentStatus": "paid",
+    "orderStatus": "DELIVERED",
+    "orderOtp": "9042",
+    "deliveryPartner": {
+      "$oid": "6ac684555c73ff04c97747e4"
+    },
+    "statusTimeline": [
+      {
+        "status": "PLACED",
+        "timestamp": {
+          "$date": {
+            "$numberLong": "1791399933415"
+          }
+        },
+        "note": "Order received and forwarded to kitchen",
+        "_id": {
+          "$oid": "6ac697fdcf914b55610c1218"
+        }
+      },
+      {
+        "status": "CONFIRMED",
+        "timestamp": {
+          "$date": {
+            "$numberLong": "1791399934415"
+          }
+        },
+        "note": "Verified via upi (Ref: 76601375)",
+        "_id": {
+          "$oid": "6ac697fdcf914b55610c1219"
+        }
+      },
+      {
+        "status": "CONFIRMED",
+        "timestamp": {
+          "$date": {
+            "$numberLong": "1791399934083"
+          }
+        },
+        "note": "Kitchen accepted ticket",
+        "_id": {
+          "$oid": "6ac697fecf914b55610c1223"
+        }
+      },
+      {
+        "status": "PREPARING",
+        "timestamp": {
+          "$date": {
+            "$numberLong": "1791399934302"
+          }
+        },
+        "note": "Chef is baking pizza",
+        "_id": {
+          "$oid": "6ac697fecf914b55610c1228"
+        }
+      },
+      {
+        "status": "READY_FOR_PICKUP",
+        "timestamp": {
+          "$date": {
+            "$numberLong": "1791399934524"
+          }
+        },
+        "note": "Packed hot in thermal bag",
+        "_id": {
+          "$oid": "6ac697fecf914b55610c122e"
+        }
+      },
+      {
+        "status": "PICKED_UP",
+        "timestamp": {
+          "$date": {
+            "$numberLong": "1791399934758"
+          }
+        },
+        "note": "Courier Rajesh Vaghela accepted and picked up parcel from restaurant",
+        "_id": {
+          "$oid": "6ac697fecf914b55610c1235"
+        }
+      },
+      {
+        "status": "PICKED_UP",
+        "timestamp": {
+          "$date": {
+            "$numberLong": "1791399934981"
+          }
+        },
+        "note": "Order updated to PICKED_UP",
+        "_id": {
+          "$oid": "6ac697fecf914b55610c123d"
+        }
+      },
+      {
+        "status": "OUT_FOR_DELIVERY",
+        "timestamp": {
+          "$date": {
+            "$numberLong": "1791399935205"
+          }
+        },
+        "note": "Order updated to OUT_FOR_DELIVERY",
+        "_id": {
+          "$oid": "6ac697ffcf914b55610c1246"
+        }
+      },
+      {
+        "status": "DELIVERED",
+        "timestamp": {
+          "$date": {
+            "$numberLong": "1791399935425"
+          }
+        },
+        "note": "Customer confirmed delivery with 4-digit OTP",
+        "_id": {
+          "$oid": "6ac697ffcf914b55610c1250"
+        }
+      }
+    ],
+    "estimatedDeliveryTime": "22–26 mins",
+    "customerNote": "",
+    "cancellationReason": null,
+    "review": {
+      "rating": {
+        "$numberInt": "5"
+      },
+      "restaurantRating": {
+        "$numberInt": "5"
+      },
+      "reviewText": "Incredible woodfired truffle pizza! Rajesh delivered it piping hot in 20 minutes.",
+      "courierRating": {
+        "$numberInt": "5"
+      },
+      "createdAt": {
+        "$date": {
+          "$numberLong": "1791399935650"
+        }
+      }
+    },
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1791399933418"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1791399935651"
+      }
+    },
+    "__v": {
+      "$numberInt": "7"
+    }
+  }
+]

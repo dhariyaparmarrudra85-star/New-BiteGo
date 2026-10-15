@@ -1,0 +1,250 @@
+[
+  {
+    "_id": {
+      "$oid": "6ac68d3ff4da499b0c9795fd"
+    },
+    "user": {
+      "$oid": "6ac684555c73ff04c97747e8"
+    },
+    "fullName": "Ananya Sharma",
+    "phone": "+91 98765 43210",
+    "houseFlat": "Flat 402, Tower B, Galaxy Heights",
+    "area": "Sindhu Bhavan Road, Bodakdev",
+    "landmark": "Near Bodakdev Urban Lake Park",
+    "city": "Ahmedabad",
+    "state": "Gujarat",
+    "pincode": "380054",
+    "type": "Home",
+    "isDefault": true,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1791397183925"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1791397183925"
+      }
+    },
+    "__v": {
+      "$numberInt": "0"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ac6945a4497931b1a07e786"
+    },
+    "user": {
+      "$oid": "6ac694594497931b1a07e766"
+    },
+    "fullName": "Rohan Varma",
+    "phone": "9898012345",
+    "houseFlat": "504 Stellar Heights",
+    "area": "Sindhu Bhavan Road, Bodakdev",
+    "landmark": "Near Taj Skyline",
+    "city": "Ahmedabad",
+    "state": "Gujarat",
+    "pincode": "380054",
+    "type": "Home",
+    "isDefault": true,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1791399002427"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1791399002427"
+      }
+    },
+    "__v": {
+      "$numberInt": "0"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ac694c2a5a405eb48d61393"
+    },
+    "user": {
+      "$oid": "6ac694c0a5a405eb48d61373"
+    },
+    "fullName": "Rohan Varma",
+    "phone": "9898012345",
+    "houseFlat": "504 Stellar Heights",
+    "area": "Sindhu Bhavan Road, Bodakdev",
+    "landmark": "Near Taj Skyline",
+    "city": "Ahmedabad",
+    "state": "Gujarat",
+    "pincode": "380054",
+    "type": "Home",
+    "isDefault": true,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1791399106067"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1791399106067"
+      }
+    },
+    "__v": {
+      "$numberInt": "0"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ac694ee61c2beeb487a4c35"
+    },
+    "user": {
+      "$oid": "6ac694ed61c2beeb487a4c15"
+    },
+    "fullName": "Rohan Varma",
+    "phone": "9898012345",
+    "houseFlat": "504 Stellar Heights",
+    "area": "Sindhu Bhavan Road, Bodakdev",
+    "landmark": "Near Taj Skyline",
+    "city": "Ahmedabad",
+    "state": "Gujarat",
+    "pincode": "380054",
+    "type": "Home",
+    "isDefault": true,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1791399150582"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1791399150582"
+      }
+    },
+    "__v": {
+      "$numberInt": "0"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ac6952a61c2beeb487a4c6d"
+    },
+    "user": {
+      "$oid": "6ac6952961c2beeb487a4c4d"
+    },
+    "fullName": "Rohan Varma",
+    "phone": "9898012345",
+    "houseFlat": "504 Stellar Heights",
+    "area": "Sindhu Bhavan Road, Bodakdev",
+    "landmark": "Near Taj Skyline",
+    "city": "Ahmedabad",
+    "state": "Gujarat",
+    "pincode": "380054",
+    "type": "Home",
+    "isDefault": true,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1791399210400"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1791399210400"
+      }
+    },
+    "__v": {
+      "$numberInt": "0"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ac6963861c2beeb487a4ca5"
+    },
+    "user": {
+      "$oid": "6ac6963661c2beeb487a4c85"
+    },
+    "fullName": "Rohan Varma",
+    "phone": "9898012345",
+    "houseFlat": "504 Stellar Heights",
+    "area": "Sindhu Bhavan Road, Bodakdev",
+    "landmark": "Near Taj Skyline",
+    "city": "Ahmedabad",
+    "state": "Gujarat",
+    "pincode": "380054",
+    "type": "Home",
+    "isDefault": true,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1791399480385"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1791399480385"
+      }
+    },
+    "__v": {
+      "$numberInt": "0"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ac69688674eb9e8a57b0695"
+    },
+    "user": {
+      "$oid": "6ac69687674eb9e8a57b0675"
+    },
+    "fullName": "Rohan Varma",
+    "phone": "9898012345",
+    "houseFlat": "504 Stellar Heights",
+    "area": "Sindhu Bhavan Road, Bodakdev",
+    "landmark": "Near Taj Skyline",
+    "city": "Ahmedabad",
+    "state": "Gujarat",
+    "pincode": "380054",
+    "type": "Home",
+    "isDefault": true,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1791399560130"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1791399560130"
+      }
+    },
+    "__v": {
+      "$numberInt": "0"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ac697fccf914b55610c1208"
+    },
+    "user": {
+      "$oid": "6ac697fbcf914b55610c11e8"
+    },
+    "fullName": "Rohan Varma",
+    "phone": "9898012345",
+    "houseFlat": "504 Stellar Heights",
+    "area": "Sindhu Bhavan Road, Bodakdev",
+    "landmark": "Near Taj Skyline",
+    "city": "Ahmedabad",
+    "state": "Gujarat",
+    "pincode": "380054",
+    "type": "Home",
+    "isDefault": true,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1791399932841"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1791399932841"
+      }
+    },
+    "__v": {
+      "$numberInt": "0"
+    }
+  }
+]

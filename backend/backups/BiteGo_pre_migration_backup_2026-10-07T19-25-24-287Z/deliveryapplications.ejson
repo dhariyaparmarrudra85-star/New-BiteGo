@@ -1,0 +1,80 @@
+[
+  {
+    "_id": {
+      "$oid": "6ac68c2e05b14b30287cfe7e"
+    },
+    "userId": {
+      "$oid": "6ac68c2e05b14b30287cfe7d"
+    },
+    "fullName": "Rajesh Vaghela",
+    "email": "delivery@bitego.com",
+    "phone": "+91 98980 55667",
+    "dob": "1996-05-14",
+    "address": "Bodakdev Core, Ahmedabad",
+    "profilePhoto": "",
+    "emergencyContactName": "",
+    "emergencyContactPhone": "",
+    "vehicleType": "Bike",
+    "vehicleNumber": "GJ-01-ET-4501",
+    "drivingLicenseNumber": "GJ0120150049281",
+    "vehicleRCNumber": "RC-GJ01-2022-881",
+    "governmentId": "AADHAAR-891029102",
+    "status": "approved",
+    "rejectionReason": null,
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "documents": [],
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1791396910514"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1791396910514"
+      }
+    },
+    "__v": {
+      "$numberInt": "0"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ac68c2e05b14b30287cfe80"
+    },
+    "userId": {
+      "$oid": "6ac68c2e05b14b30287cfe7f"
+    },
+    "fullName": "Amit Kumar Solanki",
+    "email": "pendingdelivery@bitego.com",
+    "phone": "+91 97240 88991",
+    "dob": "1998-11-20",
+    "address": "Vastrapur Lake Rd, Ahmedabad",
+    "profilePhoto": "",
+    "emergencyContactName": "",
+    "emergencyContactPhone": "",
+    "vehicleType": "Scooter",
+    "vehicleNumber": "GJ-01-CK-9920",
+    "drivingLicenseNumber": "GJ0120190088123",
+    "vehicleRCNumber": "RC-GJ01-2021-440",
+    "governmentId": "AADHAAR-449102941",
+    "status": "pending",
+    "rejectionReason": null,
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "documents": [],
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1791396910784"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1791396910784"
+      }
+    },
+    "__v": {
+      "$numberInt": "0"
+    }
+  }
+]

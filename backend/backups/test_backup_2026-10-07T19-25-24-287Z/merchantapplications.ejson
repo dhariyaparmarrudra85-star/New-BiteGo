@@ -1,0 +1,90 @@
+[
+  {
+    "_id": {
+      "$oid": "6ac684545c73ff04c97747e1"
+    },
+    "userId": {
+      "$oid": "6ac684545c73ff04c97747e0"
+    },
+    "restaurantName": "The Dark Roast Pizzeria",
+    "ownerName": "Chef Vikram Patel",
+    "email": "merchant@darkroast.com",
+    "phone": "+91 79 4002 9182",
+    "address": "Sindhu Bhavan Express Branch, Bodakdev",
+    "hub": "Bodakdev Hub",
+    "category": "Italian • Gourmet Neapolitan Pizza",
+    "description": "",
+    "photo": "",
+    "fssaiNumber": "108230049281",
+    "gstin": "24AAECB1029P1Z2",
+    "bankMandate": "Verified",
+    "requestedCommission": {
+      "$numberInt": "16"
+    },
+    "status": "approved",
+    "rejectionReason": null,
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "documents": [],
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1791394900754"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1791394900754"
+      }
+    },
+    "__v": {
+      "$numberInt": "0"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ac684555c73ff04c97747e3"
+    },
+    "userId": {
+      "$oid": "6ac684545c73ff04c97747e2"
+    },
+    "restaurantName": "Shree Thaker Gujarati Dining",
+    "ownerName": "Hitesh Shah",
+    "email": "pendingmerchant@pizzeria.com",
+    "phone": "+91 79 2550 6555",
+    "address": "Ellis Bridge Flagship, Ahmedabad",
+    "hub": "Ellis Bridge Hub",
+    "category": "Authentic Pure-Veg Gujarati Thali",
+    "description": "",
+    "photo": "",
+    "fssaiNumber": "108240098765",
+    "gstin": "24AAACR1234F1Z1",
+    "bankMandate": "Verified",
+    "requestedCommission": {
+      "$numberInt": "18"
+    },
+    "status": "approved",
+    "rejectionReason": null,
+    "reviewedBy": {
+      "$oid": "6ac5ce1bfe17aad7958d18ca"
+    },
+    "reviewedAt": {
+      "$date": {
+        "$numberLong": "1791396357544"
+      }
+    },
+    "documents": [],
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1791394901014"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1791396357546"
+      }
+    },
+    "__v": {
+      "$numberInt": "0"
+    }
+  }
+]

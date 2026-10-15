@@ -1,0 +1,33 @@
+[
+  {
+    "_id": {
+      "$oid": "6ac69c9ad4e4511607b58b76"
+    },
+    "user": {
+      "$oid": "6ac68c2e05b14b30287cfe81"
+    },
+    "fullName": "Ananya Sharma",
+    "phone": "+91 98765 43210",
+    "houseFlat": "Flat 402, Tower B, Galaxy Heights",
+    "area": "Sindhu Bhavan Road, Bodakdev",
+    "landmark": "Near Bodakdev Urban Lake Park",
+    "city": "Ahmedabad",
+    "state": "Gujarat",
+    "pincode": "380054",
+    "type": "Home",
+    "isDefault": true,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1791401114070"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1791401114070"
+      }
+    },
+    "__v": {
+      "$numberInt": "0"
+    }
+  }
+]

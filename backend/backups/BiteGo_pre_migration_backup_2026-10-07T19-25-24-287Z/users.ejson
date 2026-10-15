@@ -1,0 +1,219 @@
+[
+  {
+    "_id": {
+      "$oid": "6ac68c2d05b14b30287cfe77"
+    },
+    "name": "Vikramaditya S.",
+    "email": "superadmin@bitego.com",
+    "password": "$2b$10$.bfwDfQmbImQIA4kLOEWRuZno43dXvu2l.IourBKna1qUfvaIvaA2",
+    "phone": "+91 99090 12345",
+    "role": "superadmin",
+    "verificationStatus": "approved",
+    "rejectionReason": null,
+    "isActive": true,
+    "isOnline": false,
+    "isAvailable": false,
+    "profilePhoto": "",
+    "address": "",
+    "city": "Ahmedabad",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1791396909053"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1791396909053"
+      }
+    },
+    "__v": {
+      "$numberInt": "0"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ac68c2d05b14b30287cfe78"
+    },
+    "name": "Neha Rajput",
+    "email": "admin@bitego.com",
+    "password": "$2b$10$sPlFMj.BYk.wh4wf/lCVPuBvJrLtLAL9WKatdLFd.6quk3mpCTvZu",
+    "phone": "+91 98250 44321",
+    "role": "admin",
+    "verificationStatus": "approved",
+    "rejectionReason": null,
+    "isActive": true,
+    "isOnline": false,
+    "isAvailable": false,
+    "profilePhoto": "",
+    "address": "",
+    "city": "Ahmedabad",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1791396909679"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1791401113214"
+      }
+    },
+    "__v": {
+      "$numberInt": "0"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ac68c2d05b14b30287cfe79"
+    },
+    "name": "Chef Vikram Patel",
+    "email": "merchant@darkroast.com",
+    "password": "$2b$10$DQ47ejvo6jFCWNUzt88gAuLjlTZdQBwfUP8U5mAHA.hIU7uVK44jq",
+    "phone": "+91 79 4002 9182",
+    "role": "merchant",
+    "verificationStatus": "approved",
+    "rejectionReason": null,
+    "isActive": true,
+    "isOnline": false,
+    "isAvailable": false,
+    "profilePhoto": "",
+    "address": "",
+    "city": "Ahmedabad",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1791396909869"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1791396909869"
+      }
+    },
+    "__v": {
+      "$numberInt": "0"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ac68c2e05b14b30287cfe7b"
+    },
+    "name": "Hitesh Shah",
+    "email": "pendingmerchant@pizzeria.com",
+    "password": "$2b$10$JTsZESZFwnLB//.PcvjzMuVV98lYwZvlYkhTEuzkr4uOCytGGAC8a",
+    "phone": "+91 79 2550 6555",
+    "role": "merchant",
+    "verificationStatus": "pending",
+    "rejectionReason": null,
+    "isActive": true,
+    "isOnline": false,
+    "isAvailable": false,
+    "profilePhoto": "",
+    "address": "",
+    "city": "Ahmedabad",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1791396910125"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1791396910125"
+      }
+    },
+    "__v": {
+      "$numberInt": "0"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ac68c2e05b14b30287cfe7d"
+    },
+    "name": "Rajesh Vaghela",
+    "email": "delivery@bitego.com",
+    "password": "$2b$10$p4yfMWvOvdeNshw1Px1xYeo7I1aH48s9nGSMxWxaoLcmesgzp/EnS",
+    "phone": "+91 98980 55667",
+    "role": "delivery",
+    "verificationStatus": "approved",
+    "rejectionReason": null,
+    "isActive": true,
+    "isOnline": true,
+    "isAvailable": true,
+    "profilePhoto": "",
+    "address": "",
+    "city": "Ahmedabad",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1791396910384"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1791396910384"
+      }
+    },
+    "__v": {
+      "$numberInt": "0"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ac68c2e05b14b30287cfe7f"
+    },
+    "name": "Amit Kumar Solanki",
+    "email": "pendingdelivery@bitego.com",
+    "password": "$2b$10$2ha/LDVmJockU3qKu/CoIOaXddNzAY/Cdz60S.KDjFHHce6esBWta",
+    "phone": "+91 97240 88991",
+    "role": "delivery",
+    "verificationStatus": "pending",
+    "rejectionReason": null,
+    "isActive": true,
+    "isOnline": false,
+    "isAvailable": false,
+    "profilePhoto": "",
+    "address": "",
+    "city": "Ahmedabad",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1791396910649"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1791396910649"
+      }
+    },
+    "__v": {
+      "$numberInt": "0"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ac68c2e05b14b30287cfe81"
+    },
+    "name": "Ananya Sharma",
+    "email": "customer@bitego.com",
+    "password": "$2b$10$.S63LmFgv9RMcT0a1VzTguR9HWwGjCklr5DkULdnds5ucmOgKWuaG",
+    "phone": "+91 98765 43210",
+    "role": "customer",
+    "verificationStatus": "approved",
+    "rejectionReason": null,
+    "isActive": true,
+    "isOnline": false,
+    "isAvailable": false,
+    "profilePhoto": "",
+    "address": "Sindhu Bhavan Rd, Bodakdev",
+    "city": "Ahmedabad",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1791396910927"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1791396910927"
+      }
+    },
+    "__v": {
+      "$numberInt": "0"
+    }
+  }
+]

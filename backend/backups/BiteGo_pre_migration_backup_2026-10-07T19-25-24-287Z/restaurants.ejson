@@ -1,0 +1,305 @@
+[
+  {
+    "_id": {
+      "$oid": "6ac699f66b5fa49e57db10e4"
+    },
+    "name": "Gwalia Sweets & Street Food",
+    "slug": "gwalia-sweets-street-food",
+    "description": "Kachori, Fafda, Jalebi, Chaat, Motichoor Ladoo & Mithai",
+    "image": "https://images.unsplash.com/photo-1599488615731-7e5c2823ff28?auto=format&fit=crop&w=700&q=80",
+    "logo": "",
+    "banner": "",
+    "rating": {
+      "$numberDouble": "4.7"
+    },
+    "numRatings": {
+      "$numberInt": "280"
+    },
+    "deliveryTime": "18 mins",
+    "deliveryNumeric": {
+      "$numberInt": "18"
+    },
+    "priceForTwo": "₹300 for two",
+    "costNumeric": {
+      "$numberInt": "300"
+    },
+    "cuisine": [
+      "Italian",
+      "Pizza",
+      "Fast Food"
+    ],
+    "type": "Pure Veg",
+    "isPureVeg": true,
+    "address": "Panchwati Circle, CG Road",
+    "hub": "Navrangpura Hub",
+    "city": "Ahmedabad",
+    "isOpen": true,
+    "offer": "20% OFF UP TO ₹100",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1791400438488"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1791400438488"
+      }
+    },
+    "__v": {
+      "$numberInt": "0"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ac699f66b5fa49e57db10e3"
+    },
+    "name": "Agashiye - House of MG",
+    "slug": "agashiye-house-of-mg",
+    "description": "Authentic Heritage Gujarati Thali, Farsan, Desserts",
+    "image": "https://images.unsplash.com/photo-1610192244261-3f33de3f55e4?auto=format&fit=crop&w=700&q=80",
+    "logo": "",
+    "banner": "",
+    "rating": {
+      "$numberDouble": "4.8"
+    },
+    "numRatings": {
+      "$numberInt": "520"
+    },
+    "deliveryTime": "32 mins",
+    "deliveryNumeric": {
+      "$numberInt": "32"
+    },
+    "priceForTwo": "₹1,200 for two",
+    "costNumeric": {
+      "$numberInt": "1200"
+    },
+    "cuisine": [
+      "Italian",
+      "Pizza",
+      "Fast Food"
+    ],
+    "type": "Pure Veg",
+    "isPureVeg": true,
+    "address": "Opposite Sidi Saiyyed Mosque, Lal Darwaja",
+    "hub": "Lal Darwaja Hub",
+    "city": "Ahmedabad",
+    "isOpen": true,
+    "offer": "Flat ₹125 OFF",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1791400438488"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1791400438488"
+      }
+    },
+    "__v": {
+      "$numberInt": "0"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ac699f66b5fa49e57db10e2"
+    },
+    "name": "The Dark Roast Pizzeria",
+    "slug": "the-dark-roast-pizzeria",
+    "description": "Woodfired Neapolitan Pizza, Pastas, Gelatos & Artisan Beverages",
+    "image": "https://images.unsplash.com/photo-1579751626657-72bc17010498?auto=format&fit=crop&w=700&q=80",
+    "logo": "",
+    "banner": "",
+    "rating": {
+      "$numberDouble": "4.8"
+    },
+    "numRatings": {
+      "$numberInt": "340"
+    },
+    "deliveryTime": "25 mins",
+    "deliveryNumeric": {
+      "$numberInt": "25"
+    },
+    "priceForTwo": "₹650 for two",
+    "costNumeric": {
+      "$numberInt": "650"
+    },
+    "cuisine": [
+      "Italian",
+      "Pizza",
+      "Fast Food"
+    ],
+    "type": "Multi-Cuisine",
+    "isPureVeg": false,
+    "address": "Sindhu Bhavan Express Branch, Bodakdev",
+    "hub": "Bodakdev Hub",
+    "city": "Ahmedabad",
+    "isOpen": true,
+    "offer": "Flat ₹100 OFF with BITEGO50",
+    "merchantUser": {
+      "$oid": "6ac68c2d05b14b30287cfe79"
+    },
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1791400438488"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1791400438488"
+      }
+    },
+    "__v": {
+      "$numberInt": "0"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ac699f66b5fa49e57db10e6"
+    },
+    "name": "Mocha Bodakdev",
+    "slug": "mocha-bodakdev",
+    "description": "Gourmet Burgers, Shakes, Paninis & Cheesecakes",
+    "image": "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=700&q=80",
+    "logo": "",
+    "banner": "",
+    "rating": {
+      "$numberDouble": "4.4"
+    },
+    "numRatings": {
+      "$numberInt": "190"
+    },
+    "deliveryTime": "28 mins",
+    "deliveryNumeric": {
+      "$numberInt": "28"
+    },
+    "priceForTwo": "₹800 for two",
+    "costNumeric": {
+      "$numberInt": "800"
+    },
+    "cuisine": [
+      "Italian",
+      "Pizza",
+      "Fast Food"
+    ],
+    "type": "Multi-Cuisine",
+    "isPureVeg": false,
+    "address": "Devashish Business Park, Bodakdev",
+    "hub": "Bodakdev Hub",
+    "city": "Ahmedabad",
+    "isOpen": true,
+    "offer": "15% Flat OFF",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1791400438488"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1791400438488"
+      }
+    },
+    "__v": {
+      "$numberInt": "0"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ac699f66b5fa49e57db10e5"
+    },
+    "name": "Behrouz Royal Biryani",
+    "slug": "behrouz-royal-biryani",
+    "description": "Dum Gosht, Zaikedaar Paneer Biryani, Kebabs & Shahi Tukda",
+    "image": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=700&q=80",
+    "logo": "",
+    "banner": "",
+    "rating": {
+      "$numberDouble": "4.5"
+    },
+    "numRatings": {
+      "$numberInt": "610"
+    },
+    "deliveryTime": "35 mins",
+    "deliveryNumeric": {
+      "$numberInt": "35"
+    },
+    "priceForTwo": "₹750 for two",
+    "costNumeric": {
+      "$numberInt": "750"
+    },
+    "cuisine": [
+      "Italian",
+      "Pizza",
+      "Fast Food"
+    ],
+    "type": "Multi-Cuisine",
+    "isPureVeg": false,
+    "address": "Vastrapur Lake Rd, Vastrapur",
+    "hub": "Vastrapur Hub",
+    "city": "Ahmedabad",
+    "isOpen": true,
+    "offer": "Free Dessert on ₹499",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1791400438488"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1791400438488"
+      }
+    },
+    "__v": {
+      "$numberInt": "0"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6ac699f66b5fa49e57db10e7"
+    },
+    "name": "Sasumaa Gujarati Thali",
+    "slug": "sasumaa-gujarati-thali",
+    "description": "Authentic Kathiyawadi & Gujarati Spreads, Unlimited Combo",
+    "image": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&w=700&q=80",
+    "logo": "",
+    "banner": "",
+    "rating": {
+      "$numberDouble": "4.9"
+    },
+    "numRatings": {
+      "$numberInt": "440"
+    },
+    "deliveryTime": "30 mins",
+    "deliveryNumeric": {
+      "$numberInt": "30"
+    },
+    "priceForTwo": "₹550 for two",
+    "costNumeric": {
+      "$numberInt": "550"
+    },
+    "cuisine": [
+      "Italian",
+      "Pizza",
+      "Fast Food"
+    ],
+    "type": "Pure Veg",
+    "isPureVeg": true,
+    "address": "Ellis Bridge Flagship, Ahmedabad",
+    "hub": "Ellis Bridge Hub",
+    "city": "Ahmedabad",
+    "isOpen": true,
+    "offer": "BiteGo Super Deal",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1791400438488"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1791400438488"
+      }
+    },
+    "__v": {
+      "$numberInt": "0"
+    }
+  }
+]
