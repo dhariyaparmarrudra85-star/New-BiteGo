@@ -364,14 +364,53 @@ export const getOrderById = async (req, res) => {
       });
     }
 
-    // Role check: customer can only view own order unless merchant/delivery/admin/superadmin
-    if (
-      req.user.role === "customer" &&
-      order.customer?._id?.toString() !== req.user._id.toString()
-    ) {
+    // Strict Role-Based Object-Level Authorization (IDOR Protection)
+    const userRole = req.user.role;
+    const userId = req.user._id.toString();
+
+    if (userRole === "customer") {
+      const customerId = order.customer?._id
+        ? order.customer._id.toString()
+        : order.customer?.toString();
+
+      if (customerId !== userId) {
+        return res.status(403).json({
+          success: false,
+          message: "Access denied: You are not authorized to view this customer order.",
+        });
+      }
+    } else if (userRole === "merchant") {
+      const orderRestaurantId = order.restaurant?._id || order.restaurant;
+      const isAuthorizedMerchant = await Restaurant.exists({
+        _id: orderRestaurantId,
+        $or: [{ merchantUser: req.user._id }, { owner: req.user._id }],
+      });
+
+      if (!isAuthorizedMerchant) {
+        return res.status(403).json({
+          success: false,
+          message: "Access denied: You can only access orders belonging to your restaurant.",
+        });
+      }
+    } else if (userRole === "delivery") {
+      const assignedPartnerId = order.deliveryPartner?._id
+        ? order.deliveryPartner._id.toString()
+        : order.deliveryPartner
+        ? order.deliveryPartner.toString()
+        : null;
+
+      if (!assignedPartnerId || assignedPartnerId !== userId) {
+        return res.status(403).json({
+          success: false,
+          message: "Access denied: You can only access orders assigned to your delivery mission.",
+        });
+      }
+    } else if (userRole === "admin" || userRole === "superadmin") {
+      // Platform Admins and SuperAdmins have platform-wide order inspection privileges
+    } else {
       return res.status(403).json({
         success: false,
-        message: "You are not authorized to view this order.",
+        message: "Access denied: Unauthorized role.",
       });
     }
 
@@ -632,6 +671,7 @@ export const reorderOrder = async (req, res) => {
 
     const order = await Order.findOne({
       $or: [{ _id: id.match(/^[0-9a-fA-F]{24}$/) ? id : null }, { orderNumber: id.toUpperCase() }],
+      customer: req.user._id,
     }).populate("restaurant", "name isOpen");
 
     if (!order) {
@@ -757,8 +797,11 @@ export const updateOrderStatus = async (req, res) => {
       }
 
       // Check merchant owns this order's restaurant
-      const merchantRestaurant = await Restaurant.findOne({ merchantUser: req.user._id });
-      if (!merchantRestaurant || order.restaurant.toString() !== merchantRestaurant._id.toString()) {
+      const isAuthorizedMerchant = await Restaurant.exists({
+        _id: order.restaurant,
+        $or: [{ merchantUser: req.user._id }, { owner: req.user._id }],
+      });
+      if (!isAuthorizedMerchant) {
         return res.status(403).json({
           success: false,
           message: "Security violation: You can only update orders belonging to your restaurant.",

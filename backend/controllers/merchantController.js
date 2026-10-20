@@ -7,7 +7,9 @@ import { notifyMerchantApplication, notifyOrderStateChange } from "../utils/noti
 
 // Helper to get or link restaurant for authenticated merchant
 const getMerchantRestaurantHelper = async (userId) => {
-  let restaurant = await Restaurant.findOne({ merchantUser: userId });
+  let restaurant = await Restaurant.findOne({
+    $or: [{ merchantUser: userId }, { owner: userId }],
+  });
   if (!restaurant) {
     const app = await MerchantApplication.findOne({ userId, status: "approved" });
     if (app) {
