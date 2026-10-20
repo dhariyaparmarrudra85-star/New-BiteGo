@@ -84,19 +84,54 @@ export const verifyOtpHash = (candidateOtp, storedHash) => {
 };
 
 /**
+ * Inspects environment configuration to determine available SMS provider.
+ */
+export const getSmsProviderInfo = () => {
+  const isProd = process.env.NODE_ENV === "production";
+  const twilioConfigured = Boolean(
+    process.env.TWILIO_ACCOUNT_SID &&
+    process.env.TWILIO_AUTH_TOKEN &&
+    process.env.TWILIO_PHONE_NUMBER
+  );
+  const msg91Configured = Boolean(
+    process.env.MSG91_AUTH_KEY &&
+    process.env.MSG91_TEMPLATE_ID
+  );
+
+  if (twilioConfigured) {
+    return { provider: "twilio", isConfigured: true, isSandbox: false };
+  }
+  if (msg91Configured) {
+    return { provider: "msg91", isConfigured: true, isSandbox: false };
+  }
+  if (!isProd) {
+    return { provider: "sandbox", isConfigured: true, isSandbox: true };
+  }
+  return { provider: "none", isConfigured: false, isSandbox: false };
+};
+
+/**
  * Dispatches an SMS verification code via configured SMS provider.
  * Supports Twilio, MSG91, or Development Sandbox when credentials are unconfigured.
  */
 export const dispatchSmsOtp = async ({ phoneNumber, otp }) => {
-  const twilioSid = process.env.TWILIO_ACCOUNT_SID;
-  const twilioToken = process.env.TWILIO_AUTH_TOKEN;
-  const twilioFrom = process.env.TWILIO_PHONE_NUMBER;
+  const providerInfo = getSmsProviderInfo();
 
-  const msg91Key = process.env.MSG91_AUTH_KEY;
-  const msg91Template = process.env.MSG91_TEMPLATE_ID;
+  if (!providerInfo.isConfigured) {
+    const err = new Error(
+      "SMS provider credentials are not configured on the server. Please sign in with email and password or contact support."
+    );
+    err.code = "SMS_PROVIDER_NOT_CONFIGURED";
+    err.statusCode = 503;
+    throw err;
+  }
 
   // 1. Twilio SMS Provider
-  if (twilioSid && twilioToken && twilioFrom) {
+  if (providerInfo.provider === "twilio") {
+    const twilioSid = process.env.TWILIO_ACCOUNT_SID;
+    const twilioToken = process.env.TWILIO_AUTH_TOKEN;
+    const twilioFrom = process.env.TWILIO_PHONE_NUMBER;
+
     try {
       const auth = Buffer.from(`${twilioSid}:${twilioToken}`).toString("base64");
       const body = new URLSearchParams({
@@ -120,18 +155,28 @@ export const dispatchSmsOtp = async ({ phoneNumber, otp }) => {
       const twilioData = await res.json();
       if (!res.ok) {
         console.error("[SMS Service] Twilio dispatch error:", twilioData.message || twilioData);
-        throw new Error("Failed to dispatch SMS via Twilio provider.");
+        const err = new Error("Failed to dispatch SMS via Twilio provider.");
+        err.code = "SMS_DISPATCH_FAILED";
+        err.statusCode = 502;
+        throw err;
       }
 
       return { success: true, provider: "twilio" };
     } catch (err) {
       console.error("[SMS Service] Twilio delivery exception:", err.message);
+      if (!err.code) {
+        err.code = "SMS_DISPATCH_FAILED";
+        err.statusCode = 502;
+      }
       throw err;
     }
   }
 
   // 2. MSG91 SMS Provider
-  if (msg91Key && msg91Template) {
+  if (providerInfo.provider === "msg91") {
+    const msg91Key = process.env.MSG91_AUTH_KEY;
+    const msg91Template = process.env.MSG91_TEMPLATE_ID;
+
     try {
       const res = await fetch("https://control.msg91.com/api/v5/otp", {
         method: "POST",
@@ -149,25 +194,24 @@ export const dispatchSmsOtp = async ({ phoneNumber, otp }) => {
       const msgData = await res.json();
       if (!res.ok || msgData.type === "error") {
         console.error("[SMS Service] MSG91 dispatch error:", msgData);
-        throw new Error("Failed to dispatch SMS via MSG91 provider.");
+        const err = new Error("Failed to dispatch SMS via MSG91 provider.");
+        err.code = "SMS_DISPATCH_FAILED";
+        err.statusCode = 502;
+        throw err;
       }
 
       return { success: true, provider: "msg91" };
     } catch (err) {
       console.error("[SMS Service] MSG91 delivery exception:", err.message);
+      if (!err.code) {
+        err.code = "SMS_DISPATCH_FAILED";
+        err.statusCode = 502;
+      }
       throw err;
     }
   }
 
-  // 3. Development / Sandbox Provider
-  // Used when no third-party SMS provider credentials are configured in .env.
-  // In production, an error is thrown to avoid silent non-delivery.
-  if (process.env.NODE_ENV === "production") {
-    throw new Error(
-      "SMS provider credentials are not configured. Please set TWILIO_ACCOUNT_SID or MSG91_AUTH_KEY in .env."
-    );
-  }
-
+  // 3. Development / Sandbox Provider (NODE_ENV !== "production")
   console.log(
     `[SMS Service - Dev Sandbox] Dispatched OTP to ${phoneNumber.slice(0, 3)}****${phoneNumber.slice(
       -4

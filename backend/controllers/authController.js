@@ -7,6 +7,7 @@ import {
   hashOtp,
   verifyOtpHash,
   dispatchSmsOtp,
+  getSmsProviderInfo,
 } from "../utils/smsService.js";
 import mongoose from "mongoose";
 import { OAuth2Client } from "google-auth-library";
@@ -312,15 +313,26 @@ export const sendPhoneOtp = async (req, res) => {
       });
     }
 
-    // 3. Generate 6-digit OTP and secure hash
+    // 3. Verify SMS Provider Availability BEFORE creating verification records
+    const providerInfo = getSmsProviderInfo();
+    if (!providerInfo.isConfigured) {
+      return res.status(503).json({
+        success: false,
+        code: "SMS_NOT_CONFIGURED",
+        message:
+          "SMS verification is currently unavailable. Please sign in with your email and password, or contact support.",
+      });
+    }
+
+    // 4. Generate 6-digit OTP and secure hash
     const otp = generateSecureOtp();
     const otpHash = hashOtp(otp);
 
-    // 4. Save to Database (5 min expiry, 60s cooldown)
+    // 5. Save to Database (5 min expiry, 60s cooldown)
     const expiresAt = new Date(Date.now() + 5 * 60 * 1000);
     const resendAvailableAt = new Date(Date.now() + 60 * 1000);
 
-    await OtpVerification.create({
+    const otpRecord = await OtpVerification.create({
       phoneNumber: normalizedPhone,
       otpHash,
       expiresAt,
@@ -328,11 +340,23 @@ export const sendPhoneOtp = async (req, res) => {
       ip: req.ip || "",
     });
 
-    // 5. Dispatch SMS via Provider (Twilio, MSG91, or Dev Sandbox)
-    const dispatchResult = await dispatchSmsOtp({
-      phoneNumber: normalizedPhone,
-      otp,
-    });
+    // 6. Dispatch SMS via Provider (Twilio, MSG91, or Dev Sandbox)
+    let dispatchResult;
+    try {
+      dispatchResult = await dispatchSmsOtp({
+        phoneNumber: normalizedPhone,
+        otp,
+      });
+    } catch (dispatchErr) {
+      // Clean up the un-dispatched OTP record so the user is not locked out
+      await OtpVerification.findByIdAndDelete(otpRecord._id);
+      const statusCode = dispatchErr.statusCode || 502;
+      return res.status(statusCode).json({
+        success: false,
+        code: dispatchErr.code || "SMS_DISPATCH_FAILED",
+        message: dispatchErr.message || "Failed to dispatch verification code. Please try again or use email login.",
+      });
+    }
 
     // Mask phone for response: +91 98765 43210 -> +91 XXXXXXX210
     const maskedPhone =
