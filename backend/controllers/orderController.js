@@ -828,12 +828,36 @@ export const updateOrderStatus = async (req, res) => {
         }
       }
 
-      // For DELIVERED, verify OTP if supplied
-      if (status === "DELIVERED" && otp && order.orderOtp && order.orderOtp !== otp) {
-        return res.status(400).json({
-          success: false,
-          message: "Invalid OTP! Verification code does not match customer's code.",
-        });
+      // For DELIVERED, verify customer OTP strictly
+      if (status === "DELIVERED") {
+        if (otp === undefined || otp === null || (typeof otp === "string" && !otp.trim())) {
+          return res.status(400).json({
+            success: false,
+            message: "Customer delivery OTP is required to mark order as delivered.",
+          });
+        }
+
+        const cleanOtp =
+          typeof otp === "string"
+            ? otp.trim()
+            : typeof otp === "number"
+            ? otp.toString()
+            : "";
+
+        if (!cleanOtp || !/^\d{4}$/.test(cleanOtp)) {
+          return res.status(400).json({
+            success: false,
+            message: "Invalid OTP format. Customer delivery OTP must be exactly 4 digits.",
+          });
+        }
+
+        const isMatch = await order.compareOtp(cleanOtp);
+        if (!isMatch) {
+          return res.status(400).json({
+            success: false,
+            message: "Invalid OTP! Verification code does not match customer's code.",
+          });
+        }
       }
     }
 
@@ -1152,21 +1176,35 @@ export const verifyDeliveryOtp = async (req, res) => {
       });
     }
 
-    if (order.orderStatus !== "OUT_FOR_DELIVERY") {
+    if (!["OUT_FOR_DELIVERY", "PICKED_UP"].includes(order.orderStatus)) {
       return res.status(400).json({
         success: false,
-        message: `Order must be 'OUT_FOR_DELIVERY' before verifying OTP. Current status: ${order.orderStatus}`,
+        message: `Cannot deliver order in current status (${order.orderStatus}). Order must be 'PICKED_UP' or 'OUT_FOR_DELIVERY'.`,
       });
     }
 
-    if (!otp || typeof otp !== "string" || !otp.trim()) {
+    if (otp === undefined || otp === null || (typeof otp === "string" && !otp.trim())) {
       return res.status(400).json({
         success: false,
-        message: "OTP is required. Please ask the customer for the 4-digit code.",
+        message: "Customer delivery OTP is required to complete delivery.",
       });
     }
 
-    const isMatch = await order.compareOtp(otp);
+    const cleanOtp =
+      typeof otp === "string"
+        ? otp.trim()
+        : typeof otp === "number"
+        ? otp.toString()
+        : "";
+
+    if (!cleanOtp || !/^\d{4}$/.test(cleanOtp)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid OTP format. Customer delivery OTP must be exactly 4 digits.",
+      });
+    }
+
+    const isMatch = await order.compareOtp(cleanOtp);
     if (!isMatch) {
       return res.status(400).json({
         success: false,

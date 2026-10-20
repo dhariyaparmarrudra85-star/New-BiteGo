@@ -592,15 +592,34 @@ export const verifyDeliveryOtpAndComplete = async (req, res) => {
       });
     }
 
-    // Verify OTP if provided
-    if (otp && typeof otp === "string" && otp.trim()) {
-      const isMatch = await order.compareOtp(otp);
-      if (!isMatch) {
-        return res.status(400).json({
-          success: false,
-          message: "Invalid OTP! Please ask customer for correct 4-digit verification code.",
-        });
-      }
+    // Require valid 4-digit customer delivery OTP
+    if (otp === undefined || otp === null || (typeof otp === "string" && !otp.trim())) {
+      return res.status(400).json({
+        success: false,
+        message: "Customer delivery OTP is required to complete delivery.",
+      });
+    }
+
+    const cleanOtp =
+      typeof otp === "string"
+        ? otp.trim()
+        : typeof otp === "number"
+        ? otp.toString()
+        : "";
+
+    if (!cleanOtp || !/^\d{4}$/.test(cleanOtp)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid OTP format. Customer delivery OTP must be exactly 4 digits.",
+      });
+    }
+
+    const isMatch = await order.compareOtp(cleanOtp);
+    if (!isMatch) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid OTP! Please ask customer for correct 4-digit verification code.",
+      });
     }
 
     order.orderStatus = "DELIVERED";
