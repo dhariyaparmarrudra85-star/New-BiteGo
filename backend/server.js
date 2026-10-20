@@ -32,24 +32,80 @@ connectDB().then(async () => {
   await seedCustomerData();
 });
 
-// Middleware
-const allowedOrigins = [
+// CORS Configuration & Origin Management
+const isProduction = process.env.NODE_ENV === "production";
+
+// Parse configured origins safely from environment variables (CLIENT_URL, ALLOWED_ORIGINS)
+const parseConfiguredOrigins = () => {
+  const sources = [process.env.CLIENT_URL, process.env.ALLOWED_ORIGINS];
+  const origins = [];
+
+  for (const raw of sources) {
+    if (raw && typeof raw === "string") {
+      raw
+        .split(",")
+        .map((s) => s.trim().replace(/\/+$/, "")) // Normalize by removing trailing slashes
+        .filter((s) => s.length > 0)
+        .forEach((origin) => {
+          if (!origins.includes(origin)) origins.push(origin);
+        });
+    }
+  }
+  return origins;
+};
+
+const configuredOrigins = parseConfiguredOrigins();
+
+// Local development origins enabled ONLY when NODE_ENV !== "production"
+const devOrigins = [
   "http://localhost:5173",
   "http://127.0.0.1:5173",
   "http://localhost:3000",
   "http://127.0.0.1:3000",
+  "http://localhost:5174",
+  "http://127.0.0.1:5174",
 ];
+
+// In production, only permit explicitly configured origins
+const allowedOrigins = isProduction
+  ? configuredOrigins
+  : [...new Set([...configuredOrigins, ...devOrigins])];
+
+if (isProduction && allowedOrigins.length === 0) {
+  console.warn(
+    "[CORS Warning] Server running in production (NODE_ENV=production), but neither CLIENT_URL nor ALLOWED_ORIGINS is configured. Cross-origin browser requests will be blocked."
+  );
+} else {
+  console.log(
+    `[CORS] Mode: ${isProduction ? "production" : "development"}. Allowed origins:`,
+    allowedOrigins.length > 0 ? allowedOrigins : "(none)"
+  );
+}
 
 app.use(
   cors({
     origin: (origin, callback) => {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(null, true); // Dev-friendly fallback
+      // 1. Allow non-browser requests (curl, server-to-server, health monitors, same-origin)
+      if (!origin) {
+        return callback(null, true);
       }
+
+      // 2. Normalize incoming origin (remove trailing slash)
+      const normalized = origin.trim().replace(/\/+$/, "");
+
+      // 3. Match against allowed origins
+      if (allowedOrigins.includes(normalized)) {
+        return callback(null, true);
+      }
+
+      // 4. Reject unapproved origins without wildcard fallback
+      return callback(null, false);
     },
     credentials: true,
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "Accept"],
+    exposedHeaders: ["Content-Range", "X-Content-Range"],
+    maxAge: 86400, // 24-hour preflight cache
   })
 );
 
