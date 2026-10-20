@@ -1,74 +1,64 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext";
+import {
+  LayoutDashboard,
+  Inbox,
+  Bike,
+  Wallet,
+  User,
+  X,
+  CheckCircle2,
+} from "lucide-react";
 
 export default function FleetSidebar({
   isOpen = false,
   onClose = () => {},
   isOnDuty = true,
-  onToggleDuty = () => {},
 }) {
   const location = useLocation();
-  const { user, logout } = useAuth();
-  const isActiveDelivery =
-    location.pathname === "/fleet/active-delivery" ||
-    location.pathname.startsWith("/fleet/active-delivery");
-
-  const isDashboard =
-    (location.pathname === "/fleet" ||
-    location.pathname === "/fleet/dashboard" ||
-    location.pathname === "/rider") &&
-    !isActiveDelivery;
 
   const navItems = [
     {
-      id: "radar-dashboard",
-      label: "Radar & Dashboard",
-      icon: "radar",
+      id: "dashboard",
+      label: "Dashboard",
+      icon: LayoutDashboard,
       path: "/fleet/dashboard",
-      active: isDashboard,
+      active:
+        location.pathname === "/fleet" ||
+        location.pathname === "/fleet/dashboard" ||
+        location.pathname === "/rider",
     },
     {
-      id: "active-delivery",
-      label: "Active Delivery",
-      icon: "navigation",
-      path: "/fleet/active-delivery",
-      active: isActiveDelivery,
+      id: "available-orders",
+      label: "Available Orders",
+      icon: Inbox,
+      path: "/fleet/available-orders",
+      active:
+        location.pathname === "/fleet/available-orders" ||
+        location.pathname === "/fleet/available",
     },
     {
-      id: "delivery-history-trips",
-      label: "Delivery History & Trips",
-      icon: "history_toggle_off",
-      path: "#",
-      active: false,
+      id: "my-deliveries",
+      label: "My Deliveries",
+      icon: Bike,
+      path: "/fleet/my-deliveries",
+      active:
+        location.pathname === "/fleet/my-deliveries" ||
+        location.pathname === "/fleet/history",
     },
     {
-      id: "payouts-earnings",
-      label: "Payouts & Earnings (₹)",
-      icon: "payments",
-      path: "#",
-      active: false,
+      id: "earnings",
+      label: "Earnings",
+      icon: Wallet,
+      path: "/fleet/earnings",
+      active: location.pathname === "/fleet/earnings",
     },
     {
-      id: "performance-rating",
-      label: "Performance & Rating",
-      icon: "hotel_class",
-      path: "#",
-      active: false,
-    },
-    {
-      id: "vehicle-ev-telemetry",
-      label: "Vehicle & EV Telemetry",
-      icon: "ev_station",
-      path: "#",
-      active: false,
-    },
-    {
-      id: "fleet-support-sos",
-      label: "Fleet Support & SOS",
-      icon: "emergency_home",
-      path: "#",
-      active: false,
+      id: "profile",
+      label: "Profile",
+      icon: User,
+      path: "/fleet/profile",
+      active: location.pathname === "/fleet/profile",
     },
   ];
 
@@ -77,70 +67,62 @@ export default function FleetSidebar({
       {/* Mobile Backdrop */}
       {isOpen && (
         <div
-          className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-40 lg:hidden"
+          className="fixed inset-0 bg-slate-900/50 backdrop-blur-xs z-40 lg:hidden"
           onClick={onClose}
           aria-hidden="true"
         />
       )}
 
-      {/* 288px Fixed Sidebar */}
+      {/* 260px Simple Fixed Sidebar */}
       <aside
-        className={`fixed left-0 top-0 h-screen w-72 bg-surface-container-lowest z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)] font-sans transition-transform duration-300 lg:translate-x-0 ${
+        className={`fixed left-0 top-0 h-screen w-64 bg-[#151c27] text-white z-50 flex flex-col justify-between shadow-xl transition-transform duration-200 lg:translate-x-0 ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
         <div className="flex flex-col">
           {/* Logo Header */}
-          <div className="h-16 px-6 flex items-center justify-between bg-surface-container-low border-b border-slate-100">
-            <Link to="/fleet/dashboard" className="flex items-center gap-2">
-              <div className="w-9 h-9 rounded-xl bg-primary flex items-center justify-center text-on-primary shadow-sm">
-                <span className="material-symbols-outlined text-[20px]">
-                  electric_moped
-                </span>
+          <div className="h-16 px-5 flex items-center justify-between border-b border-slate-800">
+            <Link to="/fleet/dashboard" className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-lg bg-[#b12408] flex items-center justify-center text-white shadow-sm font-black text-sm">
+                BG
               </div>
               <div className="flex flex-col">
-                <span className="text-lg font-bold tracking-tight text-on-surface leading-tight">
+                <span className="text-base font-bold text-white leading-tight">
                   BiteGo
                 </span>
-                <span className="text-[11px] uppercase tracking-wider text-primary font-bold">
-                  Fleet Partner
+                <span className="text-[10px] uppercase tracking-wider text-orange-400 font-bold">
+                  Fleet Agent
                 </span>
               </div>
             </Link>
 
-            <div className="flex items-center gap-1.5">
-              <span className="px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container text-[11px] font-bold uppercase tracking-wider">
-                Rider v2.4
-              </span>
-              <button
-                type="button"
-                onClick={onClose}
-                className="lg:hidden p-1 text-slate-400 hover:text-slate-700 cursor-pointer"
-                aria-label="Close sidebar"
-              >
-                <span className="material-symbols-outlined text-[20px]">close</span>
-              </button>
-            </div>
+            <button
+              type="button"
+              onClick={onClose}
+              className="lg:hidden p-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800 cursor-pointer"
+              aria-label="Close menu"
+            >
+              <X className="w-5 h-5" />
+            </button>
           </div>
 
-          {/* Navigation Items */}
-          <nav className="p-3.5 flex flex-col gap-1">
+          {/* Navigation Items (The 4 simplified items) */}
+          <nav className="p-3 space-y-1 mt-2">
             {navItems.map((item) => {
+              const Icon = item.icon;
               const isActive = item.active;
               return (
                 <Link
                   key={item.id}
                   to={item.path}
                   onClick={onClose}
-                  className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition-all text-sm font-semibold ${
+                  className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition-colors text-sm font-semibold ${
                     isActive
-                      ? "bg-primary-container text-on-primary-container font-bold shadow-sm"
-                      : "text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface"
+                      ? "bg-[#b12408] text-white font-bold shadow-sm"
+                      : "text-slate-300 hover:bg-slate-800 hover:text-white"
                   }`}
                 >
-                  <span className="material-symbols-outlined text-[20px]">
-                    {item.icon}
-                  </span>
+                  <Icon className="w-5 h-5 flex-shrink-0" />
                   <span>{item.label}</span>
                 </Link>
               );
@@ -148,78 +130,29 @@ export default function FleetSidebar({
           </nav>
         </div>
 
-        {/* Bottom Profile & Actions */}
-        <div className="p-3.5 bg-surface-container-low flex flex-col gap-3 border-t border-slate-100">
-          {/* Profile Card */}
-          <div className="bg-surface-container-lowest p-3 rounded-xl shadow-sm flex flex-col gap-2.5">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2.5">
-                <div className="w-9 h-9 rounded-full bg-primary flex items-center justify-center text-on-primary shadow-xs">
-                  <span className="material-symbols-outlined text-[18px]">
-                    person
-                  </span>
-                </div>
-                <div className="flex flex-col truncate max-w-[120px]">
-                  <span className="text-xs font-semibold text-on-surface truncate">
-                    {user?.name || "Rajesh Vaghela"}
-                  </span>
-                  <span className="text-[11px] text-on-surface-variant truncate">
-                    {user?.email || "Ather 450X EV"}
-                  </span>
-                </div>
-              </div>
-
-              <span className="px-2 py-0.5 rounded-full bg-tertiary-fixed text-on-tertiary-fixed text-[11px] font-bold flex items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-tertiary animate-pulse" />
-                {isOnDuty ? "Online" : "Paused"}
-              </span>
-            </div>
-
-            <div className="flex items-center justify-between pt-1 border-t border-slate-100/60">
-              <span className="text-[11px] text-on-surface-variant font-medium flex items-center gap-1">
-                <span className="material-symbols-outlined text-[15px] text-tertiary">
-                  shield
-                </span>
-                Verified Fleet
-              </span>
-              <span className="text-xs text-on-surface font-bold">
-                4.9 ★
+        {/* Bottom Duty Status Card */}
+        <div className="p-4 border-t border-slate-800 bg-[#0f172a]">
+          <div className="flex items-center justify-between">
+            <span className="text-xs text-slate-400 font-medium">Status</span>
+            <div className="flex items-center gap-1.5">
+              <span
+                className={`w-2 h-2 rounded-full ${
+                  isOnDuty ? "bg-emerald-400 animate-pulse" : "bg-amber-400"
+                }`}
+              />
+              <span
+                className={`text-xs font-bold ${
+                  isOnDuty ? "text-emerald-400" : "text-amber-400"
+                }`}
+              >
+                {isOnDuty ? "Online" : "Offline"}
               </span>
             </div>
           </div>
-
-          {/* Quick Duty & SOS Buttons */}
-          <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={onToggleDuty}
-              className="flex-1 h-9 rounded-lg bg-surface-container-high hover:bg-surface-container text-on-surface text-xs font-bold flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
-            >
-              <span className="material-symbols-outlined text-[16px] text-tertiary">
-                {isOnDuty ? "toggle_on" : "toggle_off"}
-              </span>
-              <span>{isOnDuty ? "On Duty" : "Off Duty"}</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => alert("SOS Emergency Dispatch triggered! Live GPS sent to BiteGo Control Room.")}
-              className="h-9 px-3 rounded-lg bg-error text-on-error hover:bg-red-700 text-xs font-bold flex items-center justify-center gap-1 transition-colors cursor-pointer"
-            >
-              <span className="material-symbols-outlined text-[16px]">sos</span>
-              <span>SOS</span>
-            </button>
+          <div className="mt-2 text-[11px] text-slate-400 flex items-center gap-1">
+            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+            <span>Authorized Delivery Partner</span>
           </div>
-
-          {/* Sign Out Button */}
-          <button
-            type="button"
-            onClick={logout}
-            className="w-full h-8 rounded-lg bg-slate-100 hover:bg-rose-50 hover:text-rose-600 text-slate-600 text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
-          >
-            <span className="material-symbols-outlined text-[16px]">logout</span>
-            <span>Sign Out Fleet Account</span>
-          </button>
         </div>
       </aside>
     </>

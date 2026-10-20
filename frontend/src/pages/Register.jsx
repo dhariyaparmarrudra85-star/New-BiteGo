@@ -62,6 +62,20 @@ export default function Register() {
             </div>
           )}
 
+          {/* Instant Phone OTP Callout */}
+          <div className="mb-5 p-3 rounded-2xl bg-orange-50 border border-orange-200/80 flex items-center justify-between gap-2">
+            <div>
+              <p className="text-xs font-bold text-[#b12408]">Want instant 30-second onboarding?</p>
+              <p className="text-[11px] text-gray-600">Register or log in with just your phone number &amp; OTP</p>
+            </div>
+            <Link
+              to="/login"
+              className="px-3 py-1.5 rounded-xl bg-[#b12408] text-white text-xs font-bold shadow-xs hover:bg-[#921c05] transition-all whitespace-nowrap"
+            >
+              Phone OTP →
+            </Link>
+          </div>
+
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="block text-xs font-bold uppercase tracking-wider text-on-surface-variant mb-1.5">

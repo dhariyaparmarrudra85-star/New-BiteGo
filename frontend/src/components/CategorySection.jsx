@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
-import { ChevronLeft, ChevronRight, Compass } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { API_BASE_URL } from "../services/api";
 
 export default function CategorySection({ onSelectCategory = () => {} }) {
@@ -30,30 +30,26 @@ export default function CategorySection({ onSelectCategory = () => {} }) {
   };
 
   return (
-    <section className="w-full py-12 md:py-16 bg-white border-b border-slate-100">
+    <section className="w-full py-10 md:py-12 bg-white border-b border-slate-100">
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header with Navigation Controls */}
-        <div className="flex items-end justify-between mb-8">
+        {/* Section Header */}
+        <div className="flex items-end justify-between mb-6">
           <div>
-            <div className="flex items-center gap-1.5 text-xs uppercase tracking-wider font-extrabold text-orange-600 mb-1">
-              <Compass className="w-3.5 h-3.5" />
-              <span>Curated Feasts</span>
-            </div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+            <h2 className="text-xl sm:text-2xl font-bold text-[#151c27] tracking-tight">
               Inspiration for your order
             </h2>
-            <p className="text-sm sm:text-base text-slate-500 mt-1 font-normal">
-              Explore delicious collections curated by our master food editors
+            <p className="text-sm text-slate-500 mt-1">
+              Explore curated food collections across Ahmedabad
             </p>
           </div>
 
-          {/* Desktop Arrow Scroll Controls */}
+          {/* Scroll Controls */}
           <div className="hidden sm:flex items-center gap-2">
             <button
               type="button"
               onClick={() => handleScroll("left")}
               aria-label="Previous categories"
-              className="w-10 h-10 rounded-full border border-slate-200 bg-white hover:bg-slate-50 hover:border-slate-300 text-slate-700 flex items-center justify-center transition-all shadow-xs hover:scale-105 active:scale-95"
+              className="w-9 h-9 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-slate-600 flex items-center justify-center transition-colors"
             >
               <ChevronLeft className="w-5 h-5" />
             </button>
@@ -61,36 +57,34 @@ export default function CategorySection({ onSelectCategory = () => {} }) {
               type="button"
               onClick={() => handleScroll("right")}
               aria-label="Next categories"
-              className="w-10 h-10 rounded-full border border-slate-200 bg-white hover:bg-slate-50 hover:border-slate-300 text-slate-700 flex items-center justify-center transition-all shadow-xs hover:scale-105 active:scale-95"
+              className="w-9 h-9 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-slate-600 flex items-center justify-center transition-colors"
             >
               <ChevronRight className="w-5 h-5" />
             </button>
           </div>
         </div>
 
-        {/* Scrollable Categories List */}
+        {/* Scrollable Categories */}
         <div
           ref={scrollRef}
-          className="flex items-center gap-6 sm:gap-8 overflow-x-auto no-scrollbar scroll-smooth py-2 px-1"
+          className="flex items-center gap-5 sm:gap-6 overflow-x-auto no-scrollbar scroll-smooth py-2 px-1"
         >
           {categories.map((category) => (
             <button
               key={category.id}
               type="button"
               onClick={() => onSelectCategory(category.name)}
-              className="flex flex-col items-center group flex-shrink-0 focus:outline-none transition-transform"
+              className="flex flex-col items-center group flex-shrink-0 focus:outline-none"
             >
-              <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full p-1 bg-gradient-to-tr from-orange-100 to-amber-100 group-hover:from-orange-500 group-hover:to-amber-500 transition-all duration-300 shadow-sm group-hover:shadow-lg group-hover:shadow-orange-500/25">
-                <div className="w-full h-full rounded-full overflow-hidden bg-slate-100">
-                  <img
-                    src={category.image}
-                    alt={category.name}
-                    loading="lazy"
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                  />
-                </div>
+              <div className="w-18 h-18 sm:w-20 sm:h-20 rounded-full border-2 border-slate-200 group-hover:border-[#b12408] transition-colors overflow-hidden bg-slate-100">
+                <img
+                  src={category.image}
+                  alt={category.name}
+                  loading="lazy"
+                  className="w-full h-full object-cover"
+                />
               </div>
-              <span className="mt-3 text-xs sm:text-sm font-bold text-slate-800 group-hover:text-orange-600 transition-colors text-center whitespace-nowrap">
+              <span className="mt-2 text-xs sm:text-sm font-medium text-slate-700 group-hover:text-[#b12408] transition-colors text-center whitespace-nowrap">
                 {category.name}
               </span>
             </button>

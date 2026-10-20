@@ -1,0 +1,35 @@
+# ==========================================
+# BiteGo Backend .gitignore
+# ==========================================
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+!.env.*.example
+
+# Dependencies
+node_modules/
+
+# Uploads & local storage
+uploads/
+uploads/*
+!uploads/.gitkeep
+storage/
+
+# Database dumps and local backups
+backups/
+*.ejson
+*.bson
+*.sqlite
+*.db
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Cache & temporary files
+.cache/
+temp/
+tmp/
+.tmp/

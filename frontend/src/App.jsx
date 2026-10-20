@@ -7,6 +7,7 @@ import ProtectedRoute from "./components/auth/ProtectedRoute";
 // Core Customer & Auth Pages
 import Home from "./pages/Home";
 import Restaurants from "./pages/Restaurants";
+import CategoryDishes from "./pages/CategoryDishes";
 import Offers from "./pages/Offers";
 import Orders from "./pages/Orders";
 import RestaurantDetail from "./pages/RestaurantDetail";
@@ -22,15 +23,26 @@ import Unauthorized from "./pages/Unauthorized";
 
 // Merchant Portal Pages
 import MerchantDashboard from "./pages/MerchantDashboard";
+import MerchantOrders from "./pages/MerchantOrders";
 import MerchantMenuManagement from "./pages/MerchantMenuManagement";
+import MerchantEarnings from "./pages/MerchantEarnings";
+import MerchantProfile from "./pages/MerchantProfile";
 
 // Fleet Portal Pages
 import FleetDashboard from "./pages/FleetDashboard";
 import ActiveDelivery from "./pages/ActiveDelivery";
+import FleetAvailableOrders from "./pages/FleetAvailableOrders";
+import FleetDeliveries from "./pages/FleetDeliveries";
+import FleetEarnings from "./pages/FleetEarnings";
+import FleetProfile from "./pages/FleetProfile";
 
 // Admin & Super Admin Pages
 import AdminDashboard from "./pages/AdminDashboard";
+import AdminUsers from "./pages/AdminUsers";
 import AdminRestaurants from "./pages/AdminRestaurants";
+import AdminOrders from "./pages/AdminOrders";
+import AdminDeliveryAgents from "./pages/AdminDeliveryAgents";
+import AdminProfile from "./pages/AdminProfile";
 import AdminApplications from "./pages/AdminApplications";
 import SuperAdminDashboard from "./pages/SuperAdminDashboard";
 
@@ -42,6 +54,7 @@ function App() {
           <Routes>
             {/* Public / Customer Portal */}
             <Route path="/" element={<Home />} />
+            <Route path="/category/:category" element={<CategoryDishes />} />
             <Route path="/restaurants" element={<Restaurants />} />
             <Route path="/offers" element={<Offers />} />
             <Route path="/restaurant/:restaurantId" element={<RestaurantDetail />} />
@@ -80,6 +93,14 @@ function App() {
             }
           />
           <Route
+            path="/merchant/orders"
+            element={
+              <ProtectedRoute allowedRoles={["merchant"]}>
+                <MerchantOrders />
+              </ProtectedRoute>
+            }
+          />
+          <Route
             path="/merchant/menu"
             element={
               <ProtectedRoute allowedRoles={["merchant"]}>
@@ -92,6 +113,22 @@ function App() {
             element={
               <ProtectedRoute allowedRoles={["merchant"]}>
                 <MerchantMenuManagement />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/merchant/earnings"
+            element={
+              <ProtectedRoute allowedRoles={["merchant"]}>
+                <MerchantEarnings />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/merchant/profile"
+            element={
+              <ProtectedRoute allowedRoles={["merchant"]}>
+                <MerchantProfile />
               </ProtectedRoute>
             }
           />
@@ -130,6 +167,54 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route
+            path="/fleet/available-orders"
+            element={
+              <ProtectedRoute allowedRoles={["delivery"]}>
+                <FleetAvailableOrders />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/fleet/available"
+            element={
+              <ProtectedRoute allowedRoles={["delivery"]}>
+                <FleetAvailableOrders />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/fleet/my-deliveries"
+            element={
+              <ProtectedRoute allowedRoles={["delivery"]}>
+                <FleetDeliveries />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/fleet/history"
+            element={
+              <ProtectedRoute allowedRoles={["delivery"]}>
+                <FleetDeliveries />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/fleet/earnings"
+            element={
+              <ProtectedRoute allowedRoles={["delivery"]}>
+                <FleetEarnings />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/fleet/profile"
+            element={
+              <ProtectedRoute allowedRoles={["delivery"]}>
+                <FleetProfile />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/rider" element={<Navigate to="/fleet" replace />} />
 
           {/* Operational Admin Portal (Protected: Admin & Super Admin) */}
@@ -150,6 +235,14 @@ function App() {
             }
           />
           <Route
+            path="/admin/users"
+            element={
+              <ProtectedRoute allowedRoles={["admin", "superadmin"]}>
+                <AdminUsers />
+              </ProtectedRoute>
+            }
+          />
+          <Route
             path="/admin/restaurants"
             element={
               <ProtectedRoute allowedRoles={["admin", "superadmin"]}>
@@ -166,18 +259,18 @@ function App() {
             }
           />
           <Route
-            path="/admin/applications"
+            path="/admin/orders"
             element={
               <ProtectedRoute allowedRoles={["admin", "superadmin"]}>
-                <AdminApplications />
+                <AdminOrders />
               </ProtectedRoute>
             }
           />
           <Route
-            path="/admin/merchants"
+            path="/admin/delivery-agents"
             element={
               <ProtectedRoute allowedRoles={["admin", "superadmin"]}>
-                <AdminApplications />
+                <AdminDeliveryAgents />
               </ProtectedRoute>
             }
           />
@@ -185,7 +278,31 @@ function App() {
             path="/admin/delivery-partners"
             element={
               <ProtectedRoute allowedRoles={["admin", "superadmin"]}>
-                <AdminApplications />
+                <AdminDeliveryAgents />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/applications"
+            element={
+              <ProtectedRoute allowedRoles={["admin", "superadmin"]}>
+                <AdminRestaurants />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/merchants"
+            element={
+              <ProtectedRoute allowedRoles={["admin", "superadmin"]}>
+                <AdminRestaurants />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/profile"
+            element={
+              <ProtectedRoute allowedRoles={["admin", "superadmin"]}>
+                <AdminProfile />
               </ProtectedRoute>
             }
           />

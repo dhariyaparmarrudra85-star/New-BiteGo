@@ -585,27 +585,22 @@ export const verifyDeliveryOtpAndComplete = async (req, res) => {
       });
     }
 
-    if (order.orderStatus !== "OUT_FOR_DELIVERY") {
+    if (!["OUT_FOR_DELIVERY", "PICKED_UP"].includes(order.orderStatus)) {
       return res.status(400).json({
         success: false,
-        message: `Cannot deliver order in current status (${order.orderStatus}). Order must be 'OUT_FOR_DELIVERY'.`,
+        message: `Cannot deliver order in current status (${order.orderStatus}). Order must be 'PICKED_UP' or 'OUT_FOR_DELIVERY'.`,
       });
     }
 
-    // Verify OTP
-    if (!otp || typeof otp !== "string" || !otp.trim()) {
-      return res.status(400).json({
-        success: false,
-        message: "OTP is required. Please ask customer for 4-digit verification code.",
-      });
-    }
-
-    const isMatch = await order.compareOtp(otp);
-    if (!isMatch) {
-      return res.status(400).json({
-        success: false,
-        message: "Invalid OTP! Please ask customer for correct 4-digit verification code.",
-      });
+    // Verify OTP if provided
+    if (otp && typeof otp === "string" && otp.trim()) {
+      const isMatch = await order.compareOtp(otp);
+      if (!isMatch) {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid OTP! Please ask customer for correct 4-digit verification code.",
+        });
+      }
     }
 
     order.orderStatus = "DELIVERED";
@@ -939,13 +934,57 @@ export const getDeliveryHistory = async (req, res) => {
   try {
     const partnerId = req.user._id;
 
-    const earnings = await DeliveryEarning.find({ deliveryPartner: partnerId })
-      .populate("order", "orderNumber deliveryAddress totalAmount orderStatus createdAt")
-      .sort({ createdAt: -1 });
+    const [earnings, orders] = await Promise.all([
+      DeliveryEarning.find({ deliveryPartner: partnerId })
+        .populate("order", "orderNumber deliveryAddress totalAmount orderStatus createdAt")
+        .sort({ createdAt: -1 }),
+      Order.find({ deliveryPartner: partnerId })
+        .populate("restaurant", "name address hub phone")
+        .populate("customer", "name phone")
+        .sort({ updatedAt: -1 }),
+    ]);
+
+    const earningMap = new Map();
+    earnings.forEach((e) => {
+      const oId = e.order?._id ? e.order._id.toString() : e.order?.toString();
+      if (oId) earningMap.set(oId, e.totalEarning);
+    });
+
+    const deliveries = orders.map((ord) => {
+      let statusLabel = "Accepted";
+      if (ord.orderStatus === "PICKED_UP") statusLabel = "Picked Up";
+      else if (ord.orderStatus === "OUT_FOR_DELIVERY") statusLabel = "Picked Up";
+      else if (ord.orderStatus === "DELIVERED") statusLabel = "Delivered";
+      else if (ord.orderStatus === "CANCELLED") statusLabel = "Cancelled";
+
+      const earningAmount =
+        earningMap.get(ord._id.toString()) ||
+        (ord.orderStatus === "DELIVERED" ? ord.deliveryFee || 45 : null);
+
+      return {
+        _id: ord._id,
+        orderNumber: ord.orderNumber,
+        restaurantName: ord.restaurant?.name || "BiteGo Restaurant",
+        restaurantAddress: ord.restaurant?.address || "",
+        customerName: ord.customer?.name || ord.deliveryAddress?.fullName || "Customer",
+        customerAddress: ord.deliveryAddress
+          ? `${ord.deliveryAddress.houseFlat}, ${ord.deliveryAddress.area}`
+          : "",
+        deliveryDate: ord.deliveredAt || ord.createdAt,
+        rawStatus: ord.orderStatus,
+        status: statusLabel,
+        isActive: ["ASSIGNED", "ACCEPTED", "PICKED_UP", "OUT_FOR_DELIVERY"].includes(
+          ord.orderStatus
+        ),
+        earnings: earningAmount,
+        totalAmount: ord.totalAmount,
+      };
+    });
 
     res.json({
       success: true,
-      count: earnings.length,
+      count: deliveries.length,
+      deliveries,
       history: earnings,
     });
   } catch (error) {

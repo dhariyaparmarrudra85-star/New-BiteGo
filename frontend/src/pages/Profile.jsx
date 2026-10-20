@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useLocation } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import CartDrawer from "../components/CartDrawer";
@@ -24,8 +24,32 @@ import {
 } from "lucide-react";
 
 export default function Profile() {
-  const { user, logout } = useAuth();
+  const { user, loading, logout } = useAuth();
+  const location = useLocation();
   const cart = useCart();
+
+  // Role-specific profile navigation guard: Customer Profile must open only for customers
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+        <div className="w-10 h-10 rounded-full border-3 border-orange-200 border-t-[#b12408] animate-spin" />
+      </div>
+    );
+  }
+
+  if (!user) {
+    return <Navigate to="/login" state={{ from: location }} replace />;
+  }
+
+  if (user.role === "delivery") {
+    return <Navigate to="/fleet/profile" replace />;
+  }
+  if (user.role === "merchant") {
+    return <Navigate to="/merchant" replace />;
+  }
+  if (user.role === "admin" || user.role === "superadmin") {
+    return <Navigate to="/admin" replace />;
+  }
 
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [name, setName] = useState(user?.name || "");

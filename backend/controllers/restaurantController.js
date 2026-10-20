@@ -329,3 +329,149 @@ export const searchRestaurantsAndDishes = async (req, res) => {
   }
 };
 
+// @desc    Get all dishes for a specific category across all open restaurants
+// @route   GET /api/restaurants/category/:category
+// @access  Public
+export const getCategoryDishes = async (req, res) => {
+  try {
+    const rawCategory = req.params.category || "";
+    const cleanCategory = decodeURIComponent(rawCategory).trim().replace(/-/g, " ");
+
+    if (!cleanCategory) {
+      return res.status(400).json({
+        success: false,
+        message: "Category name is required",
+      });
+    }
+
+    const lower = cleanCategory.toLowerCase();
+    let queryFilter = {};
+
+    if (lower === "pizza") {
+      queryFilter = {
+        $or: [
+          { category: { $regex: /pizza/i } },
+          { name: { $regex: /pizza/i } },
+        ],
+      };
+    } else if (lower.startsWith("burger")) {
+      queryFilter = {
+        $or: [
+          { category: { $regex: /burger/i } },
+          { name: { $regex: /burger/i } },
+        ],
+      };
+    } else if (lower === "biryani") {
+      queryFilter = {
+        $or: [
+          { category: { $regex: /biryani/i } },
+          { name: { $regex: /biryani/i } },
+        ],
+      };
+    } else if (lower.startsWith("momo")) {
+      queryFilter = {
+        $or: [
+          { category: { $regex: /momo/i } },
+          { name: { $regex: /momo/i } },
+        ],
+      };
+    } else if (lower === "chaat") {
+      queryFilter = {
+        $or: [
+          { category: { $regex: /chaat/i } },
+          { name: { $regex: /chaat|puri|bhel/i } },
+        ],
+      };
+    } else if (lower === "dosa") {
+      queryFilter = {
+        $or: [
+          { category: { $regex: /dosa/i } },
+          { name: { $regex: /dosa/i } },
+        ],
+      };
+    } else if (lower.includes("paneer tikka")) {
+      queryFilter = {
+        $or: [
+          { category: { $regex: /paneer tikka/i } },
+          { name: { $regex: /paneer tikka/i } },
+        ],
+      };
+    } else if (lower.includes("fried rice")) {
+      queryFilter = {
+        $or: [
+          { category: { $regex: /fried rice/i } },
+          { name: { $regex: /fried rice/i } },
+        ],
+      };
+    } else if (lower.startsWith("sandwich")) {
+      queryFilter = {
+        $or: [
+          { category: { $regex: /sandwich/i } },
+          { name: { $regex: /sandwich/i } },
+        ],
+      };
+    } else if (lower.startsWith("dessert")) {
+      queryFilter = {
+        $or: [
+          { category: { $regex: /dessert|sweet|mithai/i } },
+          { name: { $regex: /brownie|sundae|cake|pastry|dessert|cheesecake|jamun/i } },
+        ],
+      };
+    } else {
+      queryFilter = {
+        $or: [
+          { category: { $regex: new RegExp(cleanCategory, "i") } },
+          { name: { $regex: new RegExp(cleanCategory, "i") } },
+        ],
+      };
+    }
+
+    // Only available dishes
+    queryFilter.isAvailable = true;
+
+    // Fetch items with populated restaurant details
+    const dishes = await MenuItem.find(queryFilter)
+      .populate("restaurant", "name slug address deliveryTime rating isOpen isPureVeg image")
+      .sort({ rating: -1, price: 1 });
+
+    // Filter to include dishes ONLY from open restaurants
+    const availableDishes = dishes.filter(
+      (d) => d.restaurant && d.restaurant.isOpen
+    );
+
+    const formattedDishes = availableDishes.map((item) => ({
+      _id: item._id,
+      id: item._id,
+      name: item.name,
+      description: item.description || "",
+      price: item.price,
+      isVeg: item.isVeg,
+      rating: item.rating || 4.8,
+      reviewsCount: item.reviewsCount || 120,
+      image: item.image,
+      category: item.category,
+      inStock: item.inStock,
+      isAvailable: item.isAvailable,
+      restaurant: item.restaurant,
+      restaurantId: item.restaurant?._id,
+      restaurantName: item.restaurant?.name || "BiteGo Restaurant",
+      customizationGroups: item.customizationGroups || [],
+    }));
+
+    res.json({
+      success: true,
+      category: cleanCategory,
+      total: formattedDishes.length,
+      dishes: formattedDishes,
+    });
+  } catch (error) {
+    console.error("Get Category Dishes Error:", error);
+    res.status(500).json({
+      success: false,
+      message: "Server error fetching category dishes.",
+      error: error.message,
+    });
+  }
+};
+
+

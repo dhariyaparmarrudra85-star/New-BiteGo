@@ -67,11 +67,50 @@ export const approveMerchant = async (req, res) => {
     if (!application) {
       application = await MerchantApplication.findOne({ userId: req.params.id });
     }
+    if (!application) {
+      const rest = await Restaurant.findById(req.params.id);
+      if (rest) {
+        const ownerId = rest.merchantUser || rest.owner;
+        if (ownerId) {
+          application = await MerchantApplication.findOne({ userId: ownerId });
+        }
+      }
+    }
 
     if (!application) {
+      // Fallback: check if target is directly a User or a Restaurant
+      const rest = await Restaurant.findById(req.params.id);
+      const targetUserId = rest?.merchantUser || rest?.owner || req.params.id;
+      const targetUser = await User.findById(targetUserId);
+
+      if (targetUser) {
+        targetUser.role = "merchant";
+        targetUser.verificationStatus = "approved";
+        targetUser.isActive = true;
+        targetUser.rejectionReason = null;
+        await targetUser.save();
+
+        if (rest) {
+          rest.isOpen = true;
+          await rest.save();
+        }
+
+        await logAudit(req, "Admin approved Merchant", targetUser, {
+          userId: targetUser._id,
+          restaurantId: rest?._id,
+        });
+
+        return res.json({
+          success: true,
+          message: `Merchant ${targetUser.name} approved successfully.`,
+          user: targetUser,
+          restaurant: rest,
+        });
+      }
+
       return res.status(404).json({
         success: false,
-        message: "Merchant application not found.",
+        message: "Merchant application or account not found.",
       });
     }
 
@@ -93,7 +132,9 @@ export const approveMerchant = async (req, res) => {
     );
 
     // Ensure Restaurant exists and is linked to approved merchant
-    let restaurant = await Restaurant.findOne({ merchantUser: application.userId });
+    let restaurant = await Restaurant.findOne({
+      $or: [{ merchantUser: application.userId }, { owner: application.userId }],
+    });
     if (!restaurant) {
       const baseSlug = application.restaurantName
         .toLowerCase()
@@ -113,6 +154,9 @@ export const approveMerchant = async (req, res) => {
         merchantUser: application.userId,
         isOpen: true,
       });
+    } else {
+      restaurant.isOpen = true;
+      await restaurant.save();
     }
 
     await logAudit(req, "Admin approved Merchant", targetUser, {
@@ -154,11 +198,47 @@ export const rejectMerchant = async (req, res) => {
     if (!application) {
       application = await MerchantApplication.findOne({ userId: req.params.id });
     }
+    if (!application) {
+      const rest = await Restaurant.findById(req.params.id);
+      if (rest) {
+        const ownerId = rest.merchantUser || rest.owner;
+        if (ownerId) {
+          application = await MerchantApplication.findOne({ userId: ownerId });
+        }
+      }
+    }
 
     if (!application) {
+      const rest = await Restaurant.findById(req.params.id);
+      const targetUserId = rest?.merchantUser || rest?.owner || req.params.id;
+      const targetUser = await User.findById(targetUserId);
+
+      if (targetUser) {
+        targetUser.verificationStatus = "rejected";
+        targetUser.rejectionReason = reason;
+        targetUser.isActive = false;
+        await targetUser.save();
+
+        if (rest) {
+          rest.isOpen = false;
+          await rest.save();
+        }
+
+        await logAudit(req, "Admin rejected Merchant", targetUser, {
+          userId: targetUser._id,
+          reason,
+        });
+
+        return res.json({
+          success: true,
+          message: `Merchant ${targetUser.name} has been rejected.`,
+          user: targetUser,
+        });
+      }
+
       return res.status(404).json({
         success: false,
-        message: "Merchant application not found.",
+        message: "Merchant application or account not found.",
       });
     }
 
@@ -174,8 +254,14 @@ export const rejectMerchant = async (req, res) => {
       {
         verificationStatus: "rejected",
         rejectionReason: reason,
+        isActive: false,
       },
       { new: true }
+    );
+
+    await Restaurant.updateMany(
+      { $or: [{ merchantUser: application.userId }, { owner: application.userId }] },
+      { isOpen: false }
     );
 
     await logAudit(req, "Admin rejected Merchant", targetUser, {
@@ -571,6 +657,220 @@ export const getApprovedMerchants = async (req, res) => {
   }
 };
 
+// Helper to safely format address object or string into a clean string
+const formatAddressString = (addr) => {
+  if (!addr) return "Bodakdev, Ahmedabad";
+  if (typeof addr === "string") return addr;
+  if (typeof addr === "object") {
+    const parts = [addr.street, addr.city, addr.state, addr.pincode].filter(Boolean);
+    return parts.length > 0 ? parts.join(", ") : "Bodakdev, Ahmedabad";
+  }
+  return String(addr);
+};
+
+// @desc    Get all restaurants & merchant applications for Admin management
+// @route   GET /api/admin/restaurants
+// @access  Private (Admin & Super Admin)
+export const getAdminRestaurants = async (req, res) => {
+  try {
+    const { search, status } = req.query;
+
+    const [restaurants, applications] = await Promise.all([
+      Restaurant.find()
+        .populate("merchantUser", "name email phone isActive verificationStatus")
+        .populate("owner", "name email phone isActive verificationStatus")
+        .lean(),
+      MerchantApplication.find()
+        .populate("userId", "name email phone isActive verificationStatus")
+        .lean(),
+    ]);
+
+    const restaurantByMerchant = {};
+    restaurants.forEach((r) => {
+      const ownerId = (r.merchantUser?._id || r.owner?._id || r.merchantUser || r.owner)?.toString();
+      if (ownerId) {
+        restaurantByMerchant[ownerId] = r;
+      }
+    });
+
+    const appByMerchant = {};
+    applications.forEach((a) => {
+      const userId = (a.userId?._id || a.userId)?.toString();
+      if (userId) {
+        appByMerchant[userId] = a;
+      }
+    });
+
+    const combined = [];
+
+    // 1. Process restaurants
+    restaurants.forEach((rest) => {
+      const merchant = rest.merchantUser || rest.owner;
+      const merchantId = (merchant?._id || merchant)?.toString();
+      const app = merchantId ? appByMerchant[merchantId] : null;
+      let verStatus = merchant?.verificationStatus || (app?.status) || "approved";
+      let isSuspended = merchant ? !merchant.isActive : false;
+
+      combined.push({
+        _id: rest._id,
+        restaurantId: rest._id,
+        name: rest.name,
+        image: rest.image || rest.logo || "",
+        owner: merchant?.name || app?.ownerName || app?.fullName || "Merchant Owner",
+        ownerEmail: merchant?.email || app?.email || "N/A",
+        ownerPhone: merchant?.phone || app?.phone || "N/A",
+        cuisine: Array.isArray(rest.cuisine) ? rest.cuisine.join(", ") : rest.cuisine || "Various",
+        address: formatAddressString(rest.address),
+        hub: rest.hub || "Bodakdev Hub",
+        city: rest.city || "Ahmedabad",
+        isOpen: Boolean(rest.isOpen),
+        verificationStatus: verStatus,
+        isSuspended,
+        merchantUserId: merchant?._id || rest.merchantUser || rest.owner,
+        applicationId: app?._id,
+        createdAt: rest.createdAt,
+      });
+    });
+
+    // 2. Process applications without created restaurants yet
+    applications.forEach((app) => {
+      const merchantId = (app.userId?._id || app.userId)?.toString();
+      const hasRest = merchantId && restaurantByMerchant[merchantId];
+      if (!hasRest) {
+        combined.push({
+          _id: app._id,
+          applicationId: app._id,
+          name: app.restaurantName || "Pending Restaurant",
+          image: app.photo || "",
+          owner: app.fullName || app.ownerName || app.userId?.name || "Applicant",
+          ownerEmail: app.email || app.userId?.email || "N/A",
+          ownerPhone: app.phone || app.userId?.phone || "N/A",
+          cuisine: app.category || "Various",
+          address: formatAddressString(app.address),
+          hub: app.hub || "Bodakdev Hub",
+          city: "Ahmedabad",
+          isOpen: false,
+          verificationStatus: app.status || "pending",
+          isSuspended: false,
+          merchantUserId: app.userId?._id || app.userId,
+          createdAt: app.createdAt,
+        });
+      }
+    });
+
+    // Filter by status
+    let filtered = combined;
+    if (status && status !== "all") {
+      if (status === "suspended") {
+        filtered = filtered.filter((r) => r.isSuspended);
+      } else if (status === "active") {
+        filtered = filtered.filter((r) => r.isOpen && !r.isSuspended && r.verificationStatus === "approved");
+      } else if (status === "inactive") {
+        filtered = filtered.filter((r) => !r.isOpen && !r.isSuspended && r.verificationStatus === "approved");
+      } else {
+        filtered = filtered.filter((r) => r.verificationStatus === status && !r.isSuspended);
+      }
+    }
+
+    if (search && search.trim()) {
+      const q = search.trim().toLowerCase();
+      filtered = filtered.filter(
+        (r) =>
+          (r.name && r.name.toLowerCase().includes(q)) ||
+          (r.owner && r.owner.toLowerCase().includes(q)) ||
+          (r.ownerEmail && r.ownerEmail.toLowerCase().includes(q)) ||
+          (r.ownerPhone && r.ownerPhone.toLowerCase().includes(q)) ||
+          (r.address && r.address.toLowerCase().includes(q)) ||
+          (r.cuisine && r.cuisine.toLowerCase().includes(q)) ||
+          (r.hub && r.hub.toLowerCase().includes(q))
+      );
+    }
+
+    res.json({
+      success: true,
+      count: filtered.length,
+      restaurants: filtered,
+    });
+  } catch (error) {
+    console.error("Get Admin Restaurants Error:", error);
+    res.status(500).json({
+      success: false,
+      message: "Server error fetching restaurants.",
+    });
+  }
+};
+
+// @desc    Toggle restaurant suspension / active availability
+// @route   PATCH /api/admin/restaurants/:id/status
+// @access  Private (Admin & Super Admin)
+export const toggleRestaurantAdminStatus = async (req, res) => {
+  try {
+    const { isOpen, isSuspended, isActive } = req.body;
+    const rest = await Restaurant.findById(req.params.id);
+
+    if (!rest) {
+      return res.status(404).json({
+        success: false,
+        message: "Restaurant not found.",
+      });
+    }
+
+    if (isOpen !== undefined) {
+      rest.isOpen = Boolean(isOpen);
+    }
+
+    // Support both isSuspended and isActive
+    const suspendFlag =
+      isSuspended !== undefined
+        ? Boolean(isSuspended)
+        : isActive !== undefined
+        ? !isActive
+        : undefined;
+
+    if (suspendFlag !== undefined) {
+      const ownerId = rest.merchantUser || rest.owner;
+      if (ownerId) {
+        await User.findByIdAndUpdate(ownerId, { isActive: !suspendFlag });
+      }
+      if (suspendFlag) {
+        rest.isOpen = false;
+      }
+    }
+
+    await rest.save();
+
+    await logAudit(
+      req,
+      suspendFlag !== undefined
+        ? suspendFlag
+          ? "RESTAURANT_SUSPENDED"
+          : "RESTAURANT_REACTIVATED"
+        : rest.isOpen
+        ? "RESTAURANT_ACTIVATED"
+        : "RESTAURANT_DEACTIVATED",
+      null,
+      {
+        restaurantId: rest._id,
+        name: rest.name,
+        isOpen: rest.isOpen,
+        isSuspended: suspendFlag,
+      }
+    );
+
+    res.json({
+      success: true,
+      message: `Restaurant status updated successfully.`,
+      restaurant: rest,
+    });
+  } catch (error) {
+    console.error("Toggle Restaurant Status Error:", error);
+    res.status(500).json({
+      success: false,
+      message: "Server error updating restaurant status.",
+    });
+  }
+};
+
 // @desc    Get delivery partners with vehicle & duty status
 // @route   GET /api/admin/delivery-partners
 // @access  Private (Admin & Super Admin)
@@ -601,10 +901,43 @@ export const getDeliveryPartners = async (req, res) => {
       .lean();
 
     const userIds = partners.map((p) => p._id);
-    const applications = await DeliveryApplication.find({ userId: { $in: userIds } });
+    const [applications, orderStats] = await Promise.all([
+      DeliveryApplication.find({ userId: { $in: userIds } }),
+      Order.aggregate([
+        { $match: { deliveryPartner: { $in: userIds } } },
+        {
+          $group: {
+            _id: "$deliveryPartner",
+            completedDeliveries: {
+              $sum: { $cond: [{ $eq: ["$orderStatus", "DELIVERED"] }, 1, 0] },
+            },
+            activeDeliveries: {
+              $sum: {
+                $cond: [
+                  {
+                    $in: [
+                      "$orderStatus",
+                      ["ASSIGNED", "PICKED_UP", "OUT_FOR_DELIVERY"],
+                    ],
+                  },
+                  1,
+                  0,
+                ],
+              },
+            },
+          },
+        },
+      ]),
+    ]);
+
     const appMap = {};
     applications.forEach((a) => {
       appMap[a.userId.toString()] = a;
+    });
+
+    const orderStatMap = {};
+    orderStats.forEach((s) => {
+      orderStatMap[s._id.toString()] = s;
     });
 
     const enriched = partners.map((p) => ({
@@ -612,6 +945,8 @@ export const getDeliveryPartners = async (req, res) => {
       application: appMap[p._id.toString()] || null,
       vehicleType: appMap[p._id.toString()]?.vehicleType || "Bike",
       vehicleNumber: appMap[p._id.toString()]?.vehicleNumber || "N/A",
+      completedDeliveries: orderStatMap[p._id.toString()]?.completedDeliveries || 0,
+      activeDeliveries: orderStatMap[p._id.toString()]?.activeDeliveries || 0,
     }));
 
     res.json({

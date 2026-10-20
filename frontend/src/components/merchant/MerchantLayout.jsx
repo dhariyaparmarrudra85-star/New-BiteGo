@@ -8,6 +8,7 @@ export default function MerchantLayout({
   searchQuery = "",
   onSearchChange = () => {},
   onShowToast = () => {},
+  restaurant = null,
   takingOrders: externalTakingOrders,
   onToggleTakingOrders: externalOnToggleTakingOrders,
 }) {
@@ -33,13 +34,15 @@ export default function MerchantLayout({
 
   return (
     <div className="bg-[#f9f9ff] text-[#151c27] min-h-screen flex flex-col font-sans selection:bg-[#b12408] selection:text-white">
-      {/* 1. Left Fixed 288px Sidebar (Shared) */}
+      {/* 1. Left Fixed 256px Sidebar */}
       <MerchantSidebar
         isOpen={sidebarOpen}
         onClose={() => setSidebarOpen(false)}
+        takingOrders={takingOrders}
+        restaurantName={restaurant?.name}
       />
 
-      {/* 2. Top Shared Header (Identical height 64px, identical controls) */}
+      {/* 2. Top Shared Header */}
       <MerchantHeader
         onOpenSidebar={() => setSidebarOpen(true)}
         takingOrders={takingOrders}
@@ -48,10 +51,11 @@ export default function MerchantLayout({
         onSearchChange={onSearchChange}
         onAddItemClick={onAddItemClick}
         onShowToast={onShowToast}
+        restaurant={restaurant}
       />
 
-      {/* 3. Main Page Content (Offset by 288px sidebar on lg and 64px header) */}
-      <div className="lg:pl-72 pt-16 flex-1 flex flex-col min-w-0 transition-all">
+      {/* 3. Main Page Content (Offset by 256px sidebar on lg and 64px header) */}
+      <div className="lg:pl-64 pt-16 flex-1 flex flex-col min-w-0 transition-all">
         {children}
       </div>
     </div>

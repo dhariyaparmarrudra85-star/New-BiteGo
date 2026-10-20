@@ -1,32 +1,64 @@
 # ==========================================
+# BiteGo Root .gitignore
+# Environment variables and secrets
+# ==========================================
+.env
+.env.*
+*.env
+backend/.env
+backend/.env.*
+frontend/.env
+frontend/.env.*
+!.env.example
+!.env.*.example
+!backend/.env.example
+!frontend/.env.example
+
+# ==========================================
 # Dependencies
 # ==========================================
 node_modules/
 **/node_modules/
 
 # ==========================================
-# Environment variables and secrets
-# ==========================================
-.env
-.env.*
-!.env.example
-!.env.*.example
-
-# ==========================================
-# Build output
+# Build outputs
 # ==========================================
 dist/
 **/dist/
+dist-ssr/
+**/dist-ssr/
 build/
 **/build/
 out/
-**/.next/
 .next/
-.nuxt/
 .output/
 
 # ==========================================
-# Logs
+# Database backups, dumps, and local data
+# ==========================================
+backups/
+**/backups/
+*.ejson
+*.bson
+*.sqlite
+*.sqlite3
+*.db
+mongodb-data/
+data/db/
+
+# ==========================================
+# Uploads and temporary media
+# ==========================================
+uploads/
+**/uploads/*
+!**/uploads/.gitkeep
+storage/
+temp/
+tmp/
+.tmp/
+
+# ==========================================
+# Logs and debug output
 # ==========================================
 logs/
 *.log
@@ -37,55 +69,25 @@ pnpm-debug.log*
 lerna-debug.log*
 
 # ==========================================
-# Cache and temporary files
+# Cache and framework artifacts
 # ==========================================
 .cache/
 **/.cache/
-.tmp/
-temp/
-tmp/
-.eslintcache
-.stylelintcache
-.parcel-cache/
 .vite/
 **/.vite/
+vite.config.*.timestamp-*
+*.local
 
 # ==========================================
-# Testing and coverage
+# Testing & Coverage
 # ==========================================
 coverage/
 .nyc_output/
 playwright-report/
 test-results/
-junit.xml
 
 # ==========================================
-# React / Vite
-# ==========================================
-vite.config.*.timestamp-*
-*.local
-
-# ==========================================
-# Next.js (if used)
-# ==========================================
-.next/
-out/
-
-# ==========================================
-# Python (if used by any service)
-# ==========================================
-__pycache__/
-*.py[cod]
-*$py.class
-.pytest_cache/
-.mypy_cache/
-.ruff_cache/
-venv/
-.venv/
-ENV/
-
-# ==========================================
-# IDE and editor files
+# IDE and OS files
 # ==========================================
 .vscode/*
 !.vscode/extensions.json
@@ -93,48 +95,11 @@ ENV/
 !.vscode/launch.json
 .idea/
 *.suo
-*.user
-*.userosscache
-*.sln.docstates
-
-# ==========================================
-# Operating system files
-# ==========================================
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
 .DS_Store
 Thumbs.db
 Desktop.ini
 $RECYCLE.BIN/
-
-# ==========================================
-# Database and local data files
-# ==========================================
-*.sqlite
-*.sqlite3
-*.db
-mongodb-data/
-data/db/
-
-# ==========================================
-# Uploaded files and generated media
-# ==========================================
-uploads/*
-!uploads/.gitkeep
-storage/
-*.tmp
-*.bak
-*.backup
-
-# ==========================================
-# Deployment and serverless local files
-# ==========================================
-.vercel/
-.netlify/
-.serverless/
-
-# ==========================================
-# Miscellaneous
-# ==========================================
-*.swp
-*.swo
-*~
-.DS_Store?

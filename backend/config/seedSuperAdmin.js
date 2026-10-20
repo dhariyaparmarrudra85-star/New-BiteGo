@@ -186,6 +186,40 @@ export const seedSuperAdminAndDemoAccounts = async () => {
       });
       console.log(`[Seed] Customer initialized: ${customer.email}`);
     }
+
+    // 8. Test Delivery Agent for Local Development
+    const testDeliveryAgentEmail = "test.rider@bitego.local";
+    let testDeliveryAgent = await User.findOne({ email: testDeliveryAgentEmail });
+    if (!testDeliveryAgent) {
+      testDeliveryAgent = await User.create({
+        name: "Dev Delivery Agent",
+        email: testDeliveryAgentEmail,
+        password: "Delivery@123",
+        phone: "+91 98000 12345",
+        role: "delivery",
+        verificationStatus: "approved",
+        isActive: true,
+        isOnline: true,
+        isAvailable: true,
+        city: "Ahmedabad",
+      });
+
+      await DeliveryApplication.create({
+        userId: testDeliveryAgent._id,
+        fullName: "Dev Delivery Agent",
+        email: testDeliveryAgentEmail,
+        phone: "+91 98000 12345",
+        dob: "1998-01-01",
+        address: "Navrangpura, Ahmedabad",
+        vehicleType: "Bike",
+        vehicleNumber: "GJ-01-DEV-9999",
+        drivingLicenseNumber: "GJ0120200012345",
+        vehicleRCNumber: "RC-GJ01-2023-999",
+        governmentId: "AADHAAR-999988887777",
+        status: "approved",
+      });
+      console.log(`[Seed] Test Delivery Agent initialized: ${testDeliveryAgent.email}`);
+    }
   } catch (error) {
     console.error("Super Admin & Demo Accounts Seed Error:", error.message);
   }

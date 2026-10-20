@@ -69,7 +69,7 @@ const restaurantSchema = new mongoose.Schema(
       default: false,
     },
     address: {
-      type: String,
+      type: mongoose.Schema.Types.Mixed,
       default: "Bodakdev, Ahmedabad",
     },
     hub: {
@@ -87,6 +87,10 @@ const restaurantSchema = new mongoose.Schema(
     offer: {
       type: String,
       default: "Flat ₹100 OFF with BITEGO50",
+    },
+    owner: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
     },
     merchantUser: {
       type: mongoose.Schema.Types.ObjectId,

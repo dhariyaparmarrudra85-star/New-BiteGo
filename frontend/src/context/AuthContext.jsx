@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext(null);
 
@@ -27,6 +28,7 @@ export const getRedirectPathForUser = (user) => {
 };
 
 export const AuthProvider = ({ children }) => {
+  const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(() => localStorage.getItem("bitego_token"));
   const [loading, setLoading] = useState(true);
@@ -203,6 +205,98 @@ export const AuthProvider = ({ children }) => {
     return null;
   };
 
+  // Send Phone OTP
+  const sendPhoneOtp = async (phone, countryCode = "+91") => {
+    const response = await fetch(`${API_BASE_URL}/auth/otp/send`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ phone, countryCode }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok || !data.success) {
+      const err = new Error(data.message || "Failed to send verification code.");
+      err.retryAfter = data.retryAfter;
+      throw err;
+    }
+
+    return data;
+  };
+
+  // Verify Phone OTP
+  const verifyPhoneOtp = async (phone, otp, countryCode = "+91") => {
+    const response = await fetch(`${API_BASE_URL}/auth/otp/verify`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ phone, otp, countryCode }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok || !data.success) {
+      throw new Error(data.message || "OTP verification failed.");
+    }
+
+    localStorage.setItem("bitego_token", data.token);
+    setToken(data.token);
+    setUser(data.user);
+
+    return data;
+  };
+
+  // Google OAuth Login
+  const loginWithGoogle = async (credential) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/auth/google`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ credential }),
+      });
+
+      let data;
+      try {
+        data = await response.json();
+      } catch {
+        throw new Error(`Server connection error (${response.status}). Please try again.`);
+      }
+
+      if (!response.ok || !data.success) {
+        throw new Error(data.message || "Google sign-in failed.");
+      }
+
+      localStorage.setItem("bitego_token", data.token);
+      setToken(data.token);
+      setUser(data.user);
+
+      return data;
+    } catch (err) {
+      console.error("[AuthContext] Google sign-in failed:", err.message);
+      throw err;
+    }
+  };
+
+  // Apple Sign-In
+  const loginWithApple = async (identityToken, userData = null) => {
+    const response = await fetch(`${API_BASE_URL}/auth/apple`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ identityToken, user: userData }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok || !data.success) {
+      throw new Error(data.message || "Apple sign-in failed.");
+    }
+
+    localStorage.setItem("bitego_token", data.token);
+    setToken(data.token);
+    setUser(data.user);
+
+    return data;
+  };
+
   // Logout handler
   const logout = async () => {
     try {
@@ -216,6 +310,7 @@ export const AuthProvider = ({ children }) => {
       localStorage.removeItem("bitego_token");
       setToken(null);
       setUser(null);
+      navigate("/login", { replace: true });
     }
   };
 
@@ -227,6 +322,10 @@ export const AuthProvider = ({ children }) => {
         loading,
         login,
         register,
+        sendPhoneOtp,
+        verifyPhoneOtp,
+        loginWithGoogle,
+        loginWithApple,
         logout,
         applyMerchant,
         applyDelivery,

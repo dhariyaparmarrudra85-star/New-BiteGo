@@ -17,6 +17,8 @@ import {
   updateAdminOrderStatus,
   deleteUser,
   updateUserRole,
+  getAdminRestaurants,
+  toggleRestaurantAdminStatus,
 } from "../controllers/adminController.js";
 import { verifyJWT, authorizeRoles } from "../middleware/auth.js";
 
@@ -29,6 +31,10 @@ router.use(verifyJWT, authorizeRoles("admin", "superadmin"));
 router.get("/overview", getAdminOverview);
 router.get("/stats", getAdminOverview);
 router.get("/dashboard", getAdminOverview);
+
+// Restaurant management
+router.get("/restaurants", getAdminRestaurants);
+router.patch("/restaurants/:id/status", toggleRestaurantAdminStatus);
 
 // Merchant management
 router.get("/merchant-applications", getMerchantApplications);

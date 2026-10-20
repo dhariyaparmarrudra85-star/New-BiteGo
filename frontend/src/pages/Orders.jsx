@@ -2,14 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useSearchParams, useParams, useNavigate, Link } from "react-router-dom";
 import { API_BASE_URL } from "../services/api";
 import Navbar from "../components/Navbar";
-import OrderHeader from "../components/OrderHeader";
-import TrackingMap from "../components/TrackingMap";
-import RouteStats from "../components/RouteStats";
-import OrderLifecycle from "../components/OrderLifecycle";
-import LocationDetails from "../components/LocationDetails";
-import CourierCard from "../components/CourierCard";
-import TipSelector from "../components/TipSelector";
-import OrderSummary from "../components/OrderSummary";
+import DeliveryTracking from "../components/DeliveryTracking";
 import Footer from "../components/Footer";
 import CartDrawer from "../components/CartDrawer";
 import {
@@ -374,60 +367,12 @@ export default function Orders() {
 
           {viewTab === "tracking" ? (
             activeOrder ? (
-              <>
-                {/* 2. ORDER HEADER (Breadcrumb, ETA, Status Badge & Distance) */}
-                <OrderHeader
-                  order={activeOrder}
-                  orderId={activeOrder.orderNumber || "BG-89421"}
-                  etaTime="7:42 PM"
-                  etaRange="18–22 mins"
-                  distance="1.2 km away"
-                  status={activeOrder.orderStatus}
-                />
-
-                {/* TWO-COLUMN LAYOUT (Desktop: 7-5 / 8-4 split, Mobile: stacked) */}
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-                  {/* LEFT COLUMN: Map, Route, Lifecycle, Locations */}
-                  <div className="lg:col-span-7 xl:col-span-8 space-y-6 sm:space-y-8">
-                    {/* 3. SIMULATED AHMEDABAD VECTOR TRACKING MAP */}
-                    <TrackingMap />
-
-                    {/* 4. ROUTE STATS & SHARE LIVE TRIP */}
-                    <RouteStats />
-
-                    {/* 5. 9-STAGE ORDER LIFECYCLE TIMELINE */}
-                    <OrderLifecycle
-                      currentStatus={activeOrder.orderStatus}
-                      timeline={activeOrder.statusTimeline || []}
-                      restaurantName={activeOrder.restaurant?.name || "The Dark Roast Pizzeria"}
-                      courierName={activeOrder.deliveryPartner?.name || ""}
-                    />
-
-                    {/* 6. PICKUP & DELIVERY LOCATION DETAILS */}
-                    <LocationDetails order={activeOrder} />
-                  </div>
-
-                  {/* RIGHT COLUMN: Courier, Tip Selector, Order Summary */}
-                  <div className="lg:col-span-5 xl:col-span-4 space-y-6 sm:space-y-8 lg:sticky lg:top-28">
-                    {/* 7. ASSIGNED COURIER */}
-                    <CourierCard order={activeOrder} />
-
-                    {/* 8. INTERACTIVE TIP SELECTOR */}
-                    <TipSelector
-                      selectedTip={selectedTip}
-                      onSelectTip={setSelectedTip}
-                    />
-
-                    {/* 9. ORDER SUMMARY & BILL CALCULATION */}
-                    <OrderSummary
-                      order={activeOrder}
-                      tipAmount={selectedTip}
-                      onCancelOrder={handleCancelOrder}
-                      onReorder={handleReorder}
-                    />
-                  </div>
-                </div>
-              </>
+              <DeliveryTracking
+                order={activeOrder}
+                onCancelOrder={handleCancelOrder}
+                onReorder={handleReorder}
+                onOpenReview={() => setShowReviewModal(true)}
+              />
             ) : loading ? (
               <div className="text-center py-20 bg-white rounded-3xl border border-slate-100 space-y-3">
                 <div className="w-10 h-10 border-4 border-orange-600 border-t-transparent rounded-full animate-spin mx-auto" />

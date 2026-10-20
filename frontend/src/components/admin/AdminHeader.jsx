@@ -1,106 +1,125 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import {
+  Menu,
+  User,
+  LogOut,
+  ChevronDown,
+  ShieldCheck,
+} from "lucide-react";
 
-export default function AdminHeader({ onToggleMobileMenu, onActionToast }) {
-  const { user } = useAuth();
-  const [searchValue, setSearchValue] = useState("");
+export default function AdminHeader({
+  onOpenSidebar = () => {},
+}) {
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+  const [profileOpen, setProfileOpen] = useState(false);
+  const menuRef = useRef(null);
 
-  const handleSearchKeyDown = (e) => {
-    if (e.key === "Enter" && searchValue.trim()) {
-      if (onActionToast) {
-        onActionToast(`Searching for: "${searchValue}"`);
+  // Close profile dropdown on outside click
+  useEffect(() => {
+    const handleOutsideClick = (e) => {
+      if (menuRef.current && !menuRef.current.contains(e.target)) {
+        setProfileOpen(false);
       }
+    };
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => document.removeEventListener("mousedown", handleOutsideClick);
+  }, []);
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      navigate("/login");
+    } catch (err) {
+      console.error("Logout error:", err);
     }
   };
 
+  const adminName = user?.name || "BiteGo Administrator";
+  const userInitial = adminName ? adminName.charAt(0).toUpperCase() : "A";
+
   return (
-    <header className="fixed top-0 left-0 lg:left-72 right-0 h-16 bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 px-space-lg flex items-center justify-between gap-space-md border-b border-surface-container-high/30">
-      {/* Mobile Hamburger + Left Search Area */}
-      <div className="flex items-center gap-space-md flex-1 max-w-2xl">
+    <header className="fixed top-0 left-0 lg:left-64 right-0 h-16 bg-white border-b border-slate-200 z-40 flex items-center justify-between px-4 sm:px-6 shadow-xs font-sans">
+      {/* Left: Mobile hamburger & Platform Context */}
+      <div className="flex items-center gap-3">
         <button
           type="button"
-          onClick={onToggleMobileMenu}
-          className="lg:hidden p-2 rounded-xl text-on-surface-variant hover:bg-surface-container"
-          aria-label="Toggle Navigation"
+          onClick={onOpenSidebar}
+          className="lg:hidden p-2 text-slate-700 hover:text-slate-900 rounded-lg hover:bg-slate-100 cursor-pointer"
+          aria-label="Open Navigation"
         >
-          <span className="material-symbols-outlined text-[24px]">menu</span>
+          <Menu className="w-5 h-5" />
         </button>
 
-        <div className="hidden xl:flex items-center gap-space-xs bg-surface-container-low px-space-sm py-1.5 rounded-xl border border-surface-container-high/50">
-          <span className="material-symbols-outlined text-[18px] text-primary">
-            travel_explore
+        <div className="flex items-center gap-2">
+          <span className="text-sm font-bold text-[#151c27] truncate">
+            Admin Console
           </span>
-          <span className="font-body-sm text-body-sm text-on-surface font-semibold max-w-[200px] truncate">
-            Ahmedabad (Bodakdev, Vastrapur...)
+          <span className="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 text-xs font-medium">
+            <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+            Verified Administrator
           </span>
-        </div>
-
-        <div className="relative flex-1">
-          <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">
-            search
-          </span>
-          <input
-            className="w-full h-11 pl-10 pr-4 bg-surface-container-low rounded-xl text-body-sm font-body-sm text-on-surface placeholder:text-on-surface-variant focus:outline-none focus:bg-surface-container-lowest focus:ring-1 focus:ring-primary/40 border border-transparent focus:border-primary/30 transition-all"
-            placeholder="Search orders, merchants, couriers, users, transactions (⌘K)"
-            type="text"
-            value={searchValue}
-            onChange={(e) => setSearchValue(e.target.value)}
-            onKeyDown={handleSearchKeyDown}
-          />
         </div>
       </div>
 
-      {/* Right Controls */}
-      <div className="flex items-center gap-space-md">
-        <div className="hidden lg:flex items-center gap-space-xs bg-tertiary-fixed px-space-sm py-1 rounded-full text-on-tertiary-fixed-variant">
-          <span className="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
-          <span className="font-label-sm text-label-sm font-bold uppercase tracking-wider">
-            System Operational (99.98% SLA)
-          </span>
-        </div>
-
-        <div className="flex items-center gap-space-xs">
+      {/* Right: Profile Menu */}
+      <div className="flex items-center gap-3">
+        <div className="relative" ref={menuRef}>
           <button
-            onClick={() => onActionToast && onActionToast("Surge override controls opened")}
-            className="h-10 px-space-sm bg-surface-container-high hover:bg-primary-fixed hover:text-on-primary-fixed transition-colors text-on-surface rounded-xl font-label-sm text-label-sm uppercase font-bold flex items-center gap-1 cursor-pointer"
             type="button"
+            onClick={() => setProfileOpen(!profileOpen)}
+            className="flex items-center gap-2 p-1.5 rounded-xl hover:bg-slate-100 transition-colors cursor-pointer focus:outline-none"
+            aria-expanded={profileOpen}
+            aria-label="Admin Profile Menu"
           >
-            <span className="material-symbols-outlined text-[16px]">electric_bolt</span>
-            <span className="hidden sm:inline">Surge Override</span>
+            <div className="w-8 h-8 rounded-full bg-[#b12408] text-white flex items-center justify-center font-bold text-xs shadow-xs">
+              {userInitial}
+            </div>
+            <span className="text-xs font-bold text-slate-800 hidden sm:inline max-w-[140px] truncate">
+              {adminName}
+            </span>
+            <ChevronDown className="w-3.5 h-3.5 text-slate-500" />
           </button>
 
-          <button
-            onClick={() => onActionToast && onActionToast("Broadcast alert panel opened")}
-            className="h-10 px-space-sm bg-error-container hover:bg-error hover:text-on-error transition-colors text-on-error-container rounded-xl font-label-sm text-label-sm uppercase font-bold flex items-center gap-1 cursor-pointer"
-            type="button"
-          >
-            <span className="material-symbols-outlined text-[16px]">campaign</span>
-            <span className="hidden sm:inline">Broadcast Alert</span>
-          </button>
-        </div>
+          {/* Dropdown Menu */}
+          {profileOpen && (
+            <div className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-lg border border-slate-200 py-1.5 z-50 text-sm animate-in fade-in zoom-in-95 duration-100">
+              <div className="px-4 py-2 border-b border-slate-100">
+                <p className="font-bold text-slate-900 truncate">{adminName}</p>
+                <p className="text-xs text-slate-500 truncate">{user?.email}</p>
+                <p className="text-[10px] text-[#b12408] font-bold uppercase tracking-wider mt-0.5">
+                  {user?.role === "superadmin" ? "Super Admin" : "Operational Admin"}
+                </p>
+              </div>
 
-        <button
-          onClick={() => onActionToast && onActionToast("Platform notifications: 3 unread system alerts")}
-          className="w-10 h-10 rounded-xl flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors relative cursor-pointer"
-          type="button"
-          aria-label="Notifications"
-        >
-          <span className="material-symbols-outlined text-[22px]">notifications</span>
-          <span className="absolute top-2 right-2 w-2 h-2 bg-primary rounded-full"></span>
-        </button>
+              <div className="py-1">
+                <Link
+                  to="/admin/profile"
+                  onClick={() => setProfileOpen(false)}
+                  className="flex items-center gap-2.5 px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-slate-900 transition-colors"
+                >
+                  <User className="w-4 h-4 text-slate-400" />
+                  <span>Admin Profile</span>
+                </Link>
+              </div>
 
-        <div className="flex items-center gap-space-sm pl-space-xs">
-          <div className="hidden md:flex flex-col text-right">
-            <span className="font-label-md text-label-md text-on-surface font-semibold">
-              {user?.name || "BiteGo Administrator"}
-            </span>
-            <span className="font-label-sm text-label-sm text-primary font-bold uppercase">
-              {user?.role === "superadmin" ? "SUPER ADMIN" : "ADMIN OPERATIONS"}
-            </span>
-          </div>
-          <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center shadow-xs">
-            <span className="material-symbols-outlined text-on-primary text-[18px]">person</span>
-          </div>
+              <div className="border-t border-slate-100 pt-1">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setProfileOpen(false);
+                    handleLogout();
+                  }}
+                  className="w-full flex items-center gap-2.5 px-4 py-2 text-rose-600 hover:bg-rose-50 transition-colors cursor-pointer text-left font-medium"
+                >
+                  <LogOut className="w-4 h-4 text-rose-500" />
+                  <span>Logout</span>
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </header>
